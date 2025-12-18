@@ -1,0 +1,188 @@
+<footer class="public-footer">
+    <div class="footer-content">
+        <div class="footer-logo">
+            <div class="footer-logo-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="footer-logo-text">
+                <h3>Easy School</h3>
+                <p>Sistema Escolar Inteligente</p>
+            </div>
+        </div>
+        
+        <div class="footer-links">
+            <h3>Links Rápidos</h3>
+            <ul>
+                <li><a href=""><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="#"><i class="fas fa-info-circle"></i> Sobre</a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i> Contato</a></li>
+                <li><a href="#"><i class="fas fa-shield-alt"></i> Privacidade</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-links">
+            <h3>Contato</h3>
+            <p><i class="fas fa-envelope"></i> contato@easyschool.com</p>
+            <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+        
+        <div class="footer-copyright">
+            © <i class="fas fa-graduation-cap"></i> {{ now|date:"Y" }} Easy School • Todos os direitos reservados
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const billingToggle = document.getElementById('billingToggle');
+        const monthlyPrices = document.querySelectorAll('.amount.monthly');
+        const yearlyPrices = document.querySelectorAll('.amount.yearly');
+        
+        billingToggle.addEventListener('change', function() {
+            if (this.checked) {
+                // Switch to yearly
+                monthlyPrices.forEach(price => price.style.display = 'none');
+                yearlyPrices.forEach(price => price.style.display = 'inline');
+            } else {
+                // Switch to monthly
+                monthlyPrices.forEach(price => price.style.display = 'inline');
+                yearlyPrices.forEach(price => price.style.display = 'none');
+            }
+        });
+        
+        // Add hover effects
+        const pricingCards = document.querySelectorAll('.pricing-card');
+        pricingCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('featured')) {
+                    this.style.transform = 'translateY(0)';
+                } else {
+                    this.style.transform = 'scale(1.05) translateY(-10px)';
+                }
+            });
+        });
+    });
+    
+    // Demo redirect functions
+    function redirectToLogin(userType) {
+        alert(`Redirecionando para login de ${userType}...`);
+        // window.location.href = `/login/${userType}/`;
+    }
+    
+    function openCreateAccountModal(userType) {
+        alert(`Abrindo modal para criar conta de ${userType}...`);
+        // Implement modal logic here
+    }
+
+
+    // User Section Scripts 
+    // Toggle password visibility
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const toggleBtn = document.querySelector('.toggle-password i');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleBtn.classList.remove('fa-eye');
+            toggleBtn.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleBtn.classList.remove('fa-eye-slash');
+            toggleBtn.classList.add('fa-eye');
+        }
+    }
+
+    // Form submission with validation
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        
+        if (!email || !password) {
+            e.preventDefault();
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            return false;
+        }
+        
+        // Simulate loading
+        const submitBtn = document.querySelector('.btn-login-submit');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+        submitBtn.disabled = true;
+        
+        // In a real implementation, this would be handled by Django
+        // Remove this timeout in production
+        setTimeout(() => {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }, 2000);
+    });
+
+    // Quick access button handlers
+    document.querySelectorAll('.access-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const userType = this.classList.contains('student') ? 'estudante' : 
+                            this.classList.contains('teacher') ? 'professor' : 'administrador';
+            
+            // In a real implementation, this would redirect to specific login
+            // For now, just update the placeholder
+            document.getElementById('email').placeholder = `Digite sua matrícula (${userType})`;
+            document.getElementById('password').focus();
+            
+            // Smooth scroll to form
+            document.getElementById('email').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+            
+            e.preventDefault();
+        });
+    });
+</script>
+
+<script>
+// Animação suave para o botão
+document.querySelector('.access-button').addEventListener('mouseenter', function(e) {
+    this.style.transform = 'translateY(-3px)';
+});
+document.querySelector('.access-button').addEventListener('mouseleave', function(e) {
+    this.style.transform = 'translateY(0)';
+});
+// Contador animado (opcional)
+function animateCounter(element, target, duration) {
+    let start = 0;
+    const increment = target / (duration / 16);
+    const timer = setInterval(() => {
+        start += increment;
+        if (start >= target) {
+            element.textContent = target + (element.textContent.includes('%') ? '%' : '');
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(start) + (element.textContent.includes('%') ? '%' : '');
+        }
+    }, 16);
+}
+// Iniciar contadores quando a seção for visível
+document.addEventListener('DOMContentLoaded', function() {
+    const stats = document.querySelectorAll('.stat-number');
+    stats.forEach(stat => {
+        const value = parseInt(stat.textContent);
+        if (!isNaN(value)) {
+            stat.textContent = '0' + (stat.textContent.includes('%') ? '%' : '');
+            setTimeout(() => {
+                animateCounter(stat, value, 1500);
+            }, 500);
+        }
+    });
+});
+</script>

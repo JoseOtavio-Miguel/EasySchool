@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block title %}EasySchool - Página Inicial{% endblock %}
+
+{% block content %}
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2>Transforme sua <span>instituição educacional</span> com tecnologia</h2>
+                <p>Gerencie alunos, professores, turmas e finanças em uma única plataforma integrada e intuitiva. Mais eficiência, menos burocracia.</p>
+                
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">+500</span>
+                        <span class="stat-label">Escolas usando</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">+50k</span>
+                        <span class="stat-label">Usuários ativos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">99%</span>
+                        <span class="stat-label">Satisfação</span>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="hero-image">
+                <div class="image-container">
+                    <div class="mockup-screen">
+                        <div class="screen-header">
+                            <div class="screen-dot dot-red"></div>
+                            <div class="screen-dot dot-yellow"></div>
+                            <div class="screen-dot dot-green"></div>
+                        </div>
+                        <div class="screen-content">
+                            <div class="screen-item">Alunos</div>
+                            <div class="screen-item">Notas</div>
+                            <div class="screen-item">Professores</div>
+                            <div class="screen-item">Turmas</div>
+                            <div class="screen-item">Financeiro</div>
+                            <div class="screen-item">Relatórios</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- USER TYPE SELECTION -->
+    <section class="user-type-section">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Comece agora mesmo</h2>
+                <p>Selecione seu tipo de usuário para acessar o sistema ou criar uma nova conta</p>
+            </div>
+            
+            <div class="user-cards">
+                <!-- Estudante -->
+                <div class="user-card student">
+                    <div class="user-card-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>Estudante</h3>
+                    <p>Acesse suas notas, frequência, materiais e atividades. Gerencie sua vida acadêmica de forma simples.</p>
+                    
+                    <div style="margin-top: 1rem;">
+                        <a class="btn-card" href="javascript:void(0)" onclick="redirectToLogin('student')">
+                            <i class="fas fa-sign-in-alt"></i> Já tenho conta
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Professor -->
+                <div class="user-card teacher">
+                    <div class="user-card-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>Professor</h3>
+                    <p>Gerencie suas turmas, lançamento de notas, frequência e planejamento de aulas. Tudo em um só lugar.</p>
+                    <!--
+                    <button class="btn-card" onclick="openCreateAccountModal('teacher')">
+                        <i class="fas fa-user-plus"></i> Criar Conta
+                    </button>
+                    -->
+                    <div style="margin-top: 1rem;">
+                        <a class="btn-card" href="javascript:void(0)" onclick="redirectToLogin('teacher')">
+                            <i class="fas fa-sign-in-alt"></i> Já tenho conta
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Responsável -->
+                <div class="user-card parent">
+                    <div class="user-card-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3>Responsável</h3>
+                    <p>Acompanhe o desempenho dos seus dependentes, boletins, comunicados e financeiro escolar.</p>
+                    <!--
+                    <button class="btn-card" onclick="openCreateAccountModal('parent')">
+                        <i class="fas fa-user-plus"></i> Criar Conta
+                    </button>
+                    -->
+                    <div style="margin-top: 1rem;">
+                        <a class="btn-card" href="javascript:void(0)" onclick="redirectToLogin('parent')" >
+                            <i class="fas fa-sign-in-alt"></i> Já tenho conta
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Administrador -->
+                <div class="user-card admin">
+                    <div class="user-card-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Administrador</h3>
+                    <p>Gerencie toda a instituição: alunos, professores, turmas, financeiro e configurações do sistema.</p>
+                    <!--
+                    <button class="btn-card" onclick="openCreateAccountModal('admin')">
+                        <i class="fas fa-user-plus"></i> Criar Conta
+                    </button>
+                    -->
+                    <div style="margin-top: 1rem;">
+                        <a class="btn-card" href="javascript:void(0)" onclick="redirectToLogin('admin')" >
+                            <i class="fas fa-sign-in-alt"></i> Já tenho conta
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features-section">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Por que escolher o Easy School?</h2>
+                <p>Tudo que sua instituição precisa em uma plataforma completa e intuitiva</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Segurança Total</h3>
+                        <p>Dados criptografados e backup automático. Seus dados estão sempre protegidos e disponíveis.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Totalmente Responsivo</h3>
+                        <p>Acesse de qualquer dispositivo: computador, tablet ou smartphone. Tudo adaptado para melhor experiência.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Suporte 24/7</h3>
+                        <p>Nossa equipe está disponível para ajudar a qualquer momento. Suporte técnico especializado sempre a postos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

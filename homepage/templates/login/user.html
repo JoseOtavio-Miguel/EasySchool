@@ -1,0 +1,96 @@
+
+<!-- EXISTING USERS SECTION -->
+    <section class="existing-users-section">
+        <div class="section-container">
+            <div class="section-title">
+                <h2><i class="fas fa-sign-in-alt"></i> Já é cadastrado?</h2>
+                <p>Acesse sua conta no sistema EasySchool</p>
+            </div>
+            
+            <div class="login-box">
+                <div class="login-container">
+                    <div class="login-header">
+                        <h3><i class="fas fa-lock"></i> Área de Acesso</h3>
+                        <p>Digite suas credenciais para entrar no sistema</p>
+                    </div>
+                    
+                    <form id="loginForm" method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> E-mail ou Matrícula</label>
+                            <input type="text" id="email" name="username" placeholder="seu.email@escola.com ou matrícula" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password"><i class="fas fa-key"></i> Senha</label>
+                            <div class="password-input">
+                                <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword()">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" name="remember"> Lembrar-me
+                            </label>
+                            <a href="" class="forgot-password">
+                                <i class="fas fa-question-circle"></i> Esqueci minha senha
+                            </a>
+                        </div>
+                        
+                        <button type="submit" class="btn-login-submit">
+                            <i class="fas fa-sign-in-alt"></i> Entrar no Sistema
+                        </button>
+                        
+                        <div class="login-divider">
+                            <span>ou acesse como</span>
+                        </div>
+                        
+                        <div class="quick-access">
+                            <a href="" class="access-btn student">
+                                <i class="fas fa-user-graduate"></i> Estudante
+                            </a>
+                            <a href="" class="access-btn teacher">
+                                <i class="fas fa-chalkboard-teacher"></i> Professor
+                            </a>
+                            <a href="" class="access-btn admin">
+                                <i class="fas fa-user-tie"></i> Administrador
+                            </a>
+                        </div>
+                    </form>
+                    
+                    <div class="login-footer">
+                        <p>Problemas para acessar? <a href=""><i class="fas fa-headset"></i> Contate o suporte</a></p>
+                    </div>
+                </div>
+                
+                <div class="login-info">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Acesso Seguro</h4>
+                        <p>Seus dados estão protegidos com criptografia de ponta a ponta</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Multiplataforma</h4>
+                        <p>Acesse do computador, tablet ou smartphone</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h4>Disponível 24/7</h4>
+                        <p>Sistema sempre online para você acessar quando precisar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
