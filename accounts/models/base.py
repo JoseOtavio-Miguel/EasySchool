@@ -2,11 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinLengthValidator
 
-class BaseUser(models.Model):
+class PersonUser(models.Model):
     """
     Modelo base abstrato para todos os usuários do sistema
     """
-    
+
     # Informações básicas
     first_name = models.CharField(
         max_length=100,
@@ -94,8 +94,9 @@ class BaseUser(models.Model):
         return None
     
     class Meta:
-        abstract = True  # Isso torna a classe abstrata
-        ordering = ['first_name', 'last_name']
+        abstract = True
     
     def __str__(self):
         return self.full_name
+
+

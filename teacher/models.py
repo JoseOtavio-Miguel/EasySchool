@@ -1,7 +1,7 @@
 from django.db import models
-from accounts.models import BaseUser
+from accounts.models import PersonUser
 
-class Teacher(BaseUser):
+class Teacher(PersonUser):
     """
     Modelo especializado para professores, herda de BaseUser
     """

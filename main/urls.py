@@ -18,9 +18,23 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import path, include
 from homepage import views as homepage_views
+from accounts import views as login_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # Homepage
     path('', homepage_views.index, name='index'),
+
+    # Admin Site
+    path('admin/', admin.site.urls),
+
+    # Login Page
     path('login/', homepage_views.login_page, name='login_page'),
+
+    # Application URLs
+    path('student/', include('student.urls')),
+    path('administrator/', include('administrator.urls')),
+
+    # Authentication
+    path('login/authenticate', login_views.login_view, name='login_view'),
+
 ]

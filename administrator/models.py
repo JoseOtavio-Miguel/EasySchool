@@ -1,7 +1,7 @@
 from django.db import models
-from accounts.models import BaseUser
+from accounts.models import PersonUser
 
-class Administrator(BaseUser):
+class Administrator(PersonUser):
     """
     Modelo especializado para administradores, herda de BaseUser
     """

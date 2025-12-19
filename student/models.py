@@ -1,7 +1,7 @@
 from django.db import models
-from accounts.models import BaseUser
+from accounts.models import PersonUser
 
-class Student(BaseUser):
+class Student(PersonUser):
     """
     Modelo especializado para estudantes, herda de BaseUser
     """
@@ -20,7 +20,8 @@ class Student(BaseUser):
         ('7ANO', '7º Ano'), ('8ANO', '8º Ano'), ('9ANO', '9º Ano'),
         ('1MEDIO', '1º Ano EM'), ('2MEDIO', '2º Ano EM'), ('3MEDIO', '3º Ano EM'),
     ]
-    
+
+
     # Campos específicos do estudante
     enrollment_number = models.CharField(
         max_length=20,

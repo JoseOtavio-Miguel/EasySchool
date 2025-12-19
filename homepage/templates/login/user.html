@@ -13,12 +13,12 @@
                         <h3><i class="fas fa-lock"></i> Área de Acesso</h3>
                         <p>Digite suas credenciais para entrar no sistema</p>
                     </div>
-                    
-                    <form id="loginForm" method="POST" action="">
+    
+                    <form id="loginForm" method="POST" action="{% url 'login_view' %}">
                         {% csrf_token %}
                         <div class="form-group">
-                            <label for="email"><i class="fas fa-envelope"></i> E-mail ou Matrícula</label>
-                            <input type="text" id="email" name="username" placeholder="seu.email@escola.com ou matrícula" required>
+                            <label for="username"><i class="fas fa-envelope"></i> Username </label>
+                            <input type="text" id="username" name="username" placeholder="Username" required>
                         </div>
                         
                         <div class="form-group">
@@ -43,22 +43,6 @@
                         <button type="submit" class="btn-login-submit">
                             <i class="fas fa-sign-in-alt"></i> Entrar no Sistema
                         </button>
-                        
-                        <div class="login-divider">
-                            <span>ou acesse como</span>
-                        </div>
-                        
-                        <div class="quick-access">
-                            <a href="" class="access-btn student">
-                                <i class="fas fa-user-graduate"></i> Estudante
-                            </a>
-                            <a href="" class="access-btn teacher">
-                                <i class="fas fa-chalkboard-teacher"></i> Professor
-                            </a>
-                            <a href="" class="access-btn admin">
-                                <i class="fas fa-user-tie"></i> Administrador
-                            </a>
-                        </div>
                     </form>
                     
                     <div class="login-footer">
