@@ -6,4 +6,4 @@ from django.contrib.auth.decorators import login_required
 def dashboard(request):
     if request.user.role != 'admin':
         return redirect('login')
-    return render(request, 'dashboard.html')
+    return render(request, 'dashboard_admin/dashboard.html')

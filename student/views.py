@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 def dashboard(request):
     if request.user.role != 'student':
         return redirect('login')
-    return render(request, 'dashboard.html')
+    return render(request, 'dashboard_student/dashboard.html')
 
 
 # Create your views here.

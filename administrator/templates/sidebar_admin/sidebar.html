@@ -1,0 +1,76 @@
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="admin-logo">
+            <div class="admin-logo-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="admin-logo-text">
+                <h2>Easy School</h2>
+                <p>Painel Administrativo</p>
+            </div>
+        </div>
+        
+        <div class="admin-info">
+            <div class="admin-avatar">
+                AD
+            </div>
+            <div class="admin-details">
+                <h4>Administrador</h4>
+                <p>Superusuário do Sistema</p>
+            </div>
+        </div>
+    </div>
+    
+    <nav class="sidebar-menu">
+        <!-- MENU PRINCIPAL -->
+        <div class="menu-section">
+            <h3 class="menu-title">Menu Principal</h3>
+            <ul class="menu-items">
+                <li class="menu-item active">
+                    <a href="#">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <i class="fas fa-chart-line"></i>
+                        Relatórios
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- GESTÃO DE USUÁRIOS -->
+        <div class="menu-section">
+            <h3 class="menu-title">Gestão de Usuários</h3>
+            <ul class="menu-items">
+                <li class="menu-item">
+                    <a href="#" onclick="openCreateModal('student')">
+                        <i class="fas fa-user-graduate"></i>
+                        Cadastrar Estudante
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" onclick="openCreateModal('teacher')">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        Cadastrar Professor
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" onclick="openCreateModal('parent')">
+                        <i class="fas fa-user-friends"></i>
+                        Cadastrar Responsável
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <i class="fas fa-users-cog"></i>
+                        Gerenciar Usuários
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</aside>

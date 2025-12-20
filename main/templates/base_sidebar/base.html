@@ -1,0 +1,8 @@
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h2>Easy School</h2>
+        <p>{{ request.user.get_role_display }}</p>
+    </div>
+
+    {% block menu %}{% endblock %}
+</aside>

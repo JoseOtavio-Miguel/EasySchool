@@ -1,0 +1,48 @@
+:root {
+    --primary-blue: #003366;
+    --secondary-blue: #004AAD;
+    --accent-blue: #4A90E2;
+    --light-blue: #E8F3FF;
+    --primary-yellow: #FEC400;
+    --secondary-yellow: #FFD700;
+    --light-yellow: #FFF9E6;
+    --dark-gray: #2C3E50;
+    --medium-gray: #5D6D7E;
+    --light-gray: #F8F9FA;
+    --white: #FFFFFF;
+    --success-green: #2ECC71;
+    --warning-orange: #F39C12;
+    --info-teal: #1ABC9C;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.12);
+    --radius: 16px;
+    --radius-sm: 8px;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --max-width: 1200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-gray);
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8f0ff 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+}
+
+
+main {
+    min-height: calc(100vh - 200px); /* ajusta conforme altura do header+footer */
+    padding: 3rem 1rem;
+    padding-top: 100px;
+    top: 0;
+}
