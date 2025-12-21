@@ -1,69 +1,21 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block title %}Dashboard do Aluno{% endblock %}
 
+<!-- Sidebar -->
 {% block sidebar %}
     {% include "sidebar_admin/sidebar.html" %}
 {% endblock %}
 
+<!-- Main Content -->
 {% block content %}
-<!-- CONTEÚDO PRINCIPAL -->
-<div class="main-content">
-    <!-- PAINEL DE CONTROLE -->
-    <div class="control-panel-header">
-        <h1><i class="fas fa-tachometer-alt"></i> Painel de Controle</h1>
-        <p>Bem-vindo ao painel administrativo. Gerencie estudantes, professores, turmas e muito mais.</p>
-    </div>
+    {% include "content/content.html" %}
+    {% include "modals/create_student_modal.html" %}
+{% endblock %}
 
-    <!-- AÇÕES RÁPIDAS -->
-    <div class="quick-actions">
-        <div class="action-card" onclick="openCreateModal('student')">
-            <div class="action-icon">
-                <i class="fas fa-user-plus"></i>
-            </div>
-            <h4>Novo Estudante</h4>
-            <p>Cadastre um novo aluno no sistema com todos os dados acadêmicos e pessoais.</p>
-        </div>
-        
-        <div class="action-card" onclick="openCreateModal('teacher')">
-            <div class="action-icon">
-                <i class="fas fa-user-tie"></i>
-            </div>
-            <h4>Novo Professor</h4>
-            <p>Adicione um novo professor ao corpo docente com suas disciplinas e turmas.</p>
-        </div>
-        
-        <div class="action-card" onclick="openCreateModal('parent')">
-            <div class="action-icon">
-                <i class="fas fa-user-friends"></i>
-            </div>
-            <h4>Novo Responsável</h4>
-            <p>Registre um responsável para um ou mais estudantes do sistema.</p>
-        </div>
-        
-        <div class="action-card" onclick="openCreateModal('class')">
-            <div class="action-icon">
-                <i class="fas fa-school"></i>
-            </div>
-            <h4>Nova Turma</h4>
-            <p>Crie uma nova turma e organize os estudantes por ano/série e turno.</p>
-        </div>
-        
-        <div class="action-card" onclick="openCreateModal('course')">
-            <div class="action-icon">
-                <i class="fas fa-book"></i>
-            </div>
-            <h4>Novo Curso</h4>
-            <p>Adicione um novo curso ou disciplina ao currículo da instituição.</p>
-        </div>
-        
-        <div class="action-card" onclick="generateReport()">
-            <div class="action-icon">
-                <i class="fas fa-chart-bar"></i>
-            </div>
-            <h4>Gerar Relatório</h4>
-            <p>Crie relatórios personalizados sobre desempenho, financeiro ou matrículas.</p>
-        </div>
-    </div>
-</div>
+<!-- Scripts Extras -->
+{% block extra_js %}
+<script src="{% static 'js/global.js' %}"></script>
+<script src="{% static 'js/modal_student/create_student_modal.js' %}"></script>
 {% endblock %}

@@ -82,7 +82,7 @@ body {
     margin-top: 1rem;
 }
 .admin-avatar {
-    width: 50px;
+    width: 45px;
     height: 40px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary-yellow) 0%, var(--secondary-yellow) 100%);
