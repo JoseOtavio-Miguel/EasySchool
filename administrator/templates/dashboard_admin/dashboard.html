@@ -10,12 +10,14 @@
 
 <!-- Main Content -->
 {% block content %}
+    {% include "partials/messages.html" %}
     {% include "content/content.html" %}
     {% include "modals/create_student_modal.html" %}
 {% endblock %}
 
 <!-- Scripts Extras -->
 {% block extra_js %}
-<script src="{% static 'js/global.js' %}"></script>
-<script src="{% static 'js/modal_student/create_student_modal.js' %}"></script>
+    <script src="{% static 'js/global.js' %}"></script>
+    <script src="{% static 'js/modal_student/create_student_modal.js' %}"></script>
+    <script src="{% static 'js/modal_student/mask.js' %}"></script>
 {% endblock %}
