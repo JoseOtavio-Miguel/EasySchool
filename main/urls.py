@@ -33,6 +33,7 @@ urlpatterns = [
     # Application URLs
     path('student/', include('student.urls')),
     path('administrator/', include('administrator.urls')),
+    path("teacher/", include("teacher.urls")),  
 
     # Authentication
     path('login/authenticate', login_views.login_view, name='login_view'),
