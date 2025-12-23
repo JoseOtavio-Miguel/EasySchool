@@ -19,7 +19,6 @@ from django.urls import path
 from django.urls import path, include
 from homepage import views as homepage_views
 from accounts import views as login_views
-from student import views as student_views
 
 urlpatterns = [
     # Homepage

@@ -62,5 +62,3 @@ function submitForm() {
 document.addEventListener('DOMContentLoaded', function() {
     updateTabIndicator();
 });
-
-
