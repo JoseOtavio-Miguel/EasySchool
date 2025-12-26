@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from student.models import Student
 from accounts.models import User
 
+app_name = "student"
 
 @login_required
 def dashboard(request):
@@ -63,6 +64,8 @@ def student_create_account(request):
             return redirect("students:list")
 
         except Exception as e:
+            print("ERRO AO CRIAR ESTUDANTE:", e)
             messages.error(request, f"Erro ao cadastrar estudante: {e}")
 
-    return render(request, "dashboard_admin/dashboard.html")
+
+    return render(request, "student/list.html")

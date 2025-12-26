@@ -34,7 +34,7 @@ body {
     width: 280px;
     background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
     color: var(--white);
-    padding: 2rem 0;
+    padding: 10rem 0;
     position: fixed;
     height: 100vh;
     overflow-y: auto;
@@ -173,3 +173,4 @@ body {
     padding: 1rem;
     min-height: 100vh;
 }
+

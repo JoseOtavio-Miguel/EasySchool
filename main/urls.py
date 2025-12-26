@@ -20,6 +20,7 @@ from django.urls import path, include
 from homepage import views as homepage_views
 from accounts import views as login_views
 
+
 urlpatterns = [
     # Homepage
     path('', homepage_views.index, name='index'),
@@ -32,6 +33,7 @@ urlpatterns = [
 
     # Application URLs
     path('student/', include('student.urls')),
+    
     path('administrator/', include('administrator.urls')),
     path("teacher/", include("teacher.urls")),  
 

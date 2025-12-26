@@ -1,5 +1,4 @@
 {% block content %}
-
 <!-- Main Content -->
 <div class="main-content">
     <!-- Control Panel -->
@@ -7,18 +6,16 @@
         <h1><i class="fas fa-tachometer-alt"></i> Painel de Controle</h1>
         <p>Bem-vindo ao painel administrativo. Gerencie estudantes, professores, turmas e muito mais.</p>
     </div>
-    
+
     <!-- Quick Actions -->
     <div class="quick-actions">
-        <a href="{% url 'administrator:list_students' %}" style="text-decoration:none; color:inherit;">
-            <div class="action-card">
-                <div class="action-icon">
-                    <i class="fas fa-user-plus"></i>
-                </div>
-                <h4>Gerenciar Estudante</h4>
-                <p>Cadastre e Gerencie os alunos no sistema com todos os dados acadêmicos e pessoais.</p>
+        <div class="action-card" onclick="list_stu">
+            <div class="action-icon">
+                <i class="fas fa-user-plus"></i>
             </div>
-        </a>
+            <h4>Novo Estudante</h4>
+            <p>Cadastre um novo aluno no sistema com todos os dados acadêmicos e pessoais.</p>
+        </div>
             
             <div class="action-card" onclick="openCreateModal('teacher')">
                 <div class="action-icon">
@@ -79,6 +76,5 @@
         <p>Crie relatórios personalizados sobre desempenho, financeiro ou matrículas.</p>
     </div>
     -->
-    </div>
 </div>
 {% endblock %}

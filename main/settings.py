@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'homepage',
     'institution',
-    'administrator',
+    'administrator.apps.AdministratorConfig',
     'teacher',
     'student',
 ]

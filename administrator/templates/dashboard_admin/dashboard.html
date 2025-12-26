@@ -11,14 +11,22 @@
 <!-- Main Content -->
 {% block content %}
     {% include "partials/messages.html" %}
-    {% include "content/content.html" %}
+
+    {% if page == "list_students" %}
+        {% include "student/list.html" %}
+    {% else %}
+        {% include "content/content.html" %}
+    {% endif %}
+
     {% include "modals/create_student_modal.html" %}
     {% include "modals/create_teacher_modal.html" %}
 {% endblock %}
 
 <!-- Scripts Extras -->
 {% block extra_js %}
+    <script src="{% static 'js/modal_student/select_grade.js' %}"></script>
     <script src="{% static 'js/global.js' %}"></script> 
     <script src="{% static 'js/modal_student/mask.js' %}"></script>  
     <script src="{% static 'js/modal_student/create_student_modal.js' %}"></script>
+
 {% endblock %}
