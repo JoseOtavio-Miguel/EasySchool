@@ -7,7 +7,13 @@
             <a href="{% url 'administrator:closeModal' %}"><i class="fa-solid fa-xmark"></i></a>
         </div>
         <div class="simple-modal-body">
-            <form method="post" action="{% url 'student:student_create_account' %}">
+            <form method="post"
+                action="{% if is_edit %}
+                    {% url 'student:student_edit_account' student.id %}
+                {% else %}
+                    {% url 'student:student_create_account' %}
+                {% endif %}">
+
                 {% csrf_token %}
 
                 <div class="simple-modal-body ">
@@ -66,7 +72,7 @@
                     <div class="tab-content" id="academic-tab">
                         <div class="simple-form-group">
                             <label>Número de Matrícula *</label>
-                            <input type="text" name="enrollment_number" value="{{student.enrollment_number}}" required>
+                            <input type="text" name="enrollment_number" value="{% if student %}{{student.enrollment_number}} {% else %} {{ enrollment}} {% endif %}" readonly>
                         </div>
 
                         <div class="form-row">
@@ -205,8 +211,11 @@
                 </div>
 
                 <div class="simple-modal-footer">
-                    <a type="button" class="btn-cancel" href="{% url 'administrator:closeModal' %}"> Cancelar</button>
-                    <button type="submit" class="btn-save" id="submit-btn">Salvar</button>
+                    <div>
+                        <a type="button" class="btn-cancel" href="{% url 'administrator:closeModal' %}"> Cancelar</a>
+                    </div>
+                    <button type="submit" class="btn-save" id="submit-btn">Salvar
+                    </button>
                 </div>
             </form>
         </div>

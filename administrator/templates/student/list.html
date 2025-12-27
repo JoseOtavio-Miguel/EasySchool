@@ -1,15 +1,6 @@
 <!-- student/list.html -->
 {% load student_filters %}
 
-{% if messages %}
-<div class="system-messages" style="margin-left: 200px;">
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-</div>
-{% endif %}
 
 
 <div class="student-page">
@@ -23,9 +14,16 @@
         </div>
 
         <div class="header-right">
-            <a onclick="openCreateModal('student')">
-                <p>Criar Aluno</p>
-            </a>
+            <div class="header-right">
+                <div class="action-bar">
+                    <a href="{% url 'administrator:openModal_create' %}" class="btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Novo Estudante</span>
+                    </a>
+                </div>
+            </div>
+            
+            
                 
             <form method="get" class="filter-form">
 
@@ -90,7 +88,8 @@
 
                     <td class="actions">
                         <div>
-                            <a class="btn-icon edit" href="{% url 'administrator:openModal' student.id %}">
+                            <a class="btn-icon edit" href="{% url 'administrator:openModal_edit' student.id %}">
+                                <i class="fa-regular fa-pen-to-square"></i>
                             </a>
                         </div>
 
@@ -101,7 +100,7 @@
                             <button type="submit"
                                     class="btn-icon delete"
                                     title="Desativar aluno">
-                                🗑️
+                                    <i class="fa-solid fa-trash"></i>
                             </button>
                         </form>
                     </td>
