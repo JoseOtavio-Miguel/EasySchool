@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404    
 from django.contrib.auth.decorators import login_required
 from student.models import Student
 from administrator.forms import StudentForm  
@@ -19,6 +19,7 @@ def list_students(request):
     context = {
         'students': students,
         'page': 'list_students',
+        'open_student_modal': request.session.pop('open_student_modal', False),
     }
     return render(request, 'dashboard_admin/dashboard.html', context)
 
@@ -51,3 +52,34 @@ def deactivate_student(request, student_id):
         messages.success(request, f'Aluno {student.name} desativado com sucesso!')
     
     return redirect('administrator:list_students')  
+
+
+
+def openModal(request, student_id):
+    students = Student.objects.all() 
+    student = get_object_or_404(Student, id=student_id)
+
+    context = {
+        'open_student_modal': True,
+        'student_id': student_id,
+        'students': students,
+        'student': student,
+        'page': 'list_students',
+    }
+
+    return render(request, 'dashboard_admin/dashboard.html', context)
+
+
+def closeModal(request):
+    students = Student.objects.all() 
+    student = get_object_or_404(Student, id=student_id)
+
+    context = {
+        'open_student_modal': False,
+        'student_id': student_id,
+        'students': students,
+        'student': student,
+        'page': 'list_students',
+    }
+
+    return render(request, 'dashboard_admin/dashboard.html', context)

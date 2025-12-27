@@ -1,6 +1,5 @@
 function openCreateModal(type) {
     const modal = document.getElementById(`modal-${type}`);
-    console.log('Modal:', modal);
     if (modal) modal.classList.add('active');
 }
 
@@ -8,6 +7,7 @@ function closeModal(type) {
     const modal = document.getElementById(`modal-${type}`);
     if (modal) modal.classList.remove('active');
 }
+
 
 // Script for Sidebar Map Pages
 document.addEventListener('DOMContentLoaded', function() {

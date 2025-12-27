@@ -11,12 +11,6 @@
 </div>
 {% endif %}
 
-<div >
-    <p> Message </p>
-</div>
-<div>
-    <p> Message </p>
-</div>
 
 <div class="student-page">
     <!-- HEADER / FILTROS -->
@@ -95,10 +89,10 @@
                     </td>
 
                     <td class="actions">
-                        <a href="{% url 'administrator:edit_student' student.id %}"
-                           class="btn-icon edit">
-                            ✏️
-                        </a>
+                        <div>
+                            <a class="btn-icon edit" href="{% url 'administrator:openModal' student.id %}">
+                            </a>
+                        </div>
 
                         <form method="post"
                               action="{% url 'administrator:deactivate_student' student.id %}"

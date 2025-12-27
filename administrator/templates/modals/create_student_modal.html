@@ -1,10 +1,10 @@
 <!-- MODAL CREATE STUDENT -->
-<div class="simple-modal-overlay" id="modal-student">
+<div class="simple-modal-overlay {% if open_student_modal %}active{% endif %}" id="modal-student">
     <div class="simple-modal">
         <!-- HEADER FIXED -->
         <div class="simple-modal-header form-scroll">
             <h3>Novo Estudante</h3>
-            <button onclick="closeModal('student')" class="simple-close">&times;</button>
+            <a href="{% url 'administrator:closeModal' %}"><i class="fa-solid fa-xmark"></i></a>
         </div>
         <div class="simple-modal-body">
             <form method="post" action="{% url 'student:student_create_account' %}">
@@ -23,37 +23,37 @@
                     <div class="tab-content active" id="personal-tab">
                         <div class="simple-form-group">
                             <label>Nome *</label>
-                            <input type="text" name="first_name" required>
+                            <input type="text" name="first_name" value="{{student.first_name}}" required>
                         </div>
 
                         <div class="simple-form-group">
                             <label>Sobrenome *</label>
-                            <input type="text" name="last_name" required>
+                            <input type="text" name="last_name" value="{{student.last_name}}" required>
                         </div>
 
                         <div class="form-row">
                             <div class="simple-form-group">
                                 <label>CPF *</label>
-                                <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required>
+                                <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" value="{{student.cpf}}" required>
                             </div>
 
                             <div class="simple-form-group">
                                 <label>RG</label>
-                                <input type="text" id="rg" name="rg">
+                                <input type="text" id="rg" name="rg" value="{{student.rg}}">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="simple-form-group">
                                 <label>Data de Nascimento *</label>
-                                <input type="date" name="date_of_birth" required>
+                                <input type="date" name="date_of_birth" value="{% if student %}{{ student.date_of_birth|date:'Y-m-d' }}{% endif %}" required>
                             </div>
 
                             <div class="simple-form-group">
                                 <label>Gênero *</label>
-                                <select name="gender" required>
+                                <select name="gender" value="{{student_gender}}" required>
                                     <option value="">Selecione</option>
-                                    <option value="M">Masculino</option>
+                                    <option value="M" {% if student.gender == "M"%}selected{% endif %}>Masculino</option>
                                     <option value="F">Feminino</option>
                                     <option value="O">Outro</option>
                                     <option value="N">Prefiro não informar</option>
@@ -66,7 +66,7 @@
                     <div class="tab-content" id="academic-tab">
                         <div class="simple-form-group">
                             <label>Número de Matrícula *</label>
-                            <input type="text" name="enrollment_number" required>
+                            <input type="text" name="enrollment_number" value="{{student.enrollment_number}}" required>
                         </div>
 
                         <div class="form-row">
@@ -74,11 +74,11 @@
                                 <label>Nível de Ensino *</label>
                                 <select name="grade_level" required>
                                     <option value="">Selecione</option>
-                                    <option value="INFANTIL">Educação Infantil</option>
-                                    <option value="FUNDAMENTAL1">Ensino Fundamental I</option>
-                                    <option value="FUNDAMENTAL2">Ensino Fundamental II</option>
-                                    <option value="MEDIO">Ensino Médio</option>
-                                    <option value="SUPERIOR">Ensino Superior</option>
+                                    <option value="INFANTIL" {% if student.grade_level == "INFANTIL" %} selected{% endif %}>Educação Infantil</option>
+                                    <option value="FUNDAMENTAL1" {% if student.grade_level == "FUNDAMENTAL1" %} selected{% endif %}>Ensino Fundamental I</option>
+                                    <option value="FUNDAMENTAL2" {% if student.grade_level == "FUNDAMENTAL2" %} selected{% endif %}>Ensino Fundamental II</option>
+                                    <option value="MEDIO" {% if student.grade_level == "MEDIO" %} selected{% endif %}>Ensino Médio</option>
+                                    <option value="SUPERIOR" {% if student.grade_level == "SUPERIOR" %} selected{% endif %}>Ensino Superior</option>
                                 </select>
                             </div>
 
@@ -86,19 +86,22 @@
                                 <label>Série/Ano *</label>
                                 <select name="specific_grade" required>
                                     <option value="">Selecione</option>
-                                    <option value="1ANO">1º Ano</option>
-                                    <option value="2ANO">2º Ano</option>
-                                    <option value="3ANO">3º Ano</option>
-                                    <option value="4ANO">4º Ano</option>
-                                    <option value="5ANO">5º Ano</option>
-                                    <option value="6ANO">6º Ano</option>
-                                    <option value="7ANO">7º Ano</option>
-                                    <option value="8ANO">8º Ano</option>
-                                    <option value="9ANO">9º Ano</option>
-                                    <option value="1MEDIO">1º Ano EM</option>
-                                    <option value="2MEDIO">2º Ano EM</option>
-                                    <option value="3MEDIO">3º Ano EM</option>
+                                
+                                    <option value="1ANO" {% if student.specific_grade == '1ANO' %}selected{% endif %}>1º Ano</option>
+                                    <option value="2ANO" {% if student.specific_grade == '2ANO' %}selected{% endif %}>2º Ano</option>
+                                    <option value="3ANO" {% if student.specific_grade == '3ANO' %}selected{% endif %}>3º Ano</option>
+                                    <option value="4ANO" {% if student.specific_grade == '4ANO' %}selected{% endif %}>4º Ano</option>
+                                    <option value="5ANO" {% if student.specific_grade == '5ANO' %}selected{% endif %}>5º Ano</option>
+                                    <option value="6ANO" {% if student.specific_grade == '6ANO' %}selected{% endif %}>6º Ano</option>
+                                    <option value="7ANO" {% if student.specific_grade == '7ANO' %}selected{% endif %}>7º Ano</option>
+                                    <option value="8ANO" {% if student.specific_grade == '8ANO' %}selected{% endif %}>8º Ano</option>
+                                    <option value="9ANO" {% if student.specific_grade == '9ANO' %}selected{% endif %}>9º Ano</option>
+                                
+                                    <option value="1MEDIO" {% if student.specific_grade == '1MEDIO' %}selected{% endif %}>1º Ano EM</option>
+                                    <option value="2MEDIO" {% if student.specific_grade == '2MEDIO' %}selected{% endif %}>2º Ano EM</option>
+                                    <option value="3MEDIO" {% if student.specific_grade == '3MEDIO' %}selected{% endif %}>3º Ano EM</option>
                                 </select>
+                                
                             </div>
                         </div>
 
@@ -106,46 +109,46 @@
                             <label>Turno *</label>
                             <select name="shift" required>
                                 <option value="">Selecione</option>
-                                <option value="MATUTINO">Matutino</option>
-                                <option value="VESPERTINO">Vespertino</option>
-                                <option value="NOTURNO">Noturno</option>
-                                <option value="INTEGRAL">Integral</option>
+                                <option value="MATUTINO" {% if student.shift == 'MATUTINO' %}selected{% endif %}>Matutino</option>
+                                <option value="VESPERTINO" {% if student.shift == 'VESPERTINO' %}selected{% endif %}>Vespertino</option>
+                                <option value="NOTURNO" {% if student.shift == 'NOTURNO' %}selected{% endif %}>Noturno</option>
+                                <option value="INTEGRAL" {% if student.shift == 'INTEGRAL' %}selected{% endif %}>Integral</option>
                             </select>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="simple-form-group">
-                                <label>Nome do Pai</label>
-                                <input type="text" name="father_name">
-                            </div>
-
-                            <div class="simple-form-group">
-                                <label>Nome da Mãe</label>
-                                <input type="text" name="mother_name">
-                            </div>
-                        </div>
-
-                        <div class="simple-form-group">
-                            <label>Responsável</label>
-                            <input type="text" name="guardian_name">
                         </div>
                     </div>
 
                     <!-- Contact Info -->
                     <div class="tab-content" id="contact-tab">
+                        <div class="form-row">
+                            <div class="simple-form-group">
+                                <label>Nome do Pai</label>
+                                <input type="text" name="father_name" value="{{student.father_name}}">
+                            </div>
+
+                            <div class="simple-form-group">
+                                <label>Nome da Mãe</label>
+                                <input type="text" name="mother_name" value="{{student.mother_name}}">
+                            </div>
+                        </div>
+
+                        <div class="simple-form-group">
+                            <label>Responsável</label>
+                            <input type="text" name="guardian_name" value="{{student.guardian_name}}">
+                        </div>
+
                         <div class="simple-form-group">
                             <label>E-mail *</label>
-                            <input type="email" name="email" required>
+                            <input type="email" name="email" value="{{student.email}}"  required>
                         </div>
 
                         <div class="simple-form-group">
                             <label>Telefone *</label>
-                            <input type="text" name="phone" placeholder="(00) 00000-0000" required>
+                            <input type="text" name="phone" placeholder="(00) 00000-0000" value="{{student.phone}}" required>
                         </div>
 
                         <div class="simple-form-group">
                             <label>Telefone do Responsável</label>
-                            <input type="text" name="guardian_phone" placeholder="(00) 00000-0000">
+                            <input type="text" name="guardian_phone" placeholder="(00) 00000-0000" value="{{student.guardian_phone}}" >
                         </div>
                     </div>
 
@@ -153,42 +156,42 @@
                     <div class="tab-content" id="address-tab">
                         <div class="simple-form-group">
                             <label>Endereço *</label>
-                            <input type="text" name="address" required>
+                            <input type="text" name="address" value="{{student.address}}" required>
                         </div>
 
                         <div class="form-row">
                             <div class="simple-form-group">
                                 <label>Número *</label>
-                                <input type="text" name="address_number" required>
+                                <input type="text" name="address_number" value="{{student.address_number}}" required>
                             </div>
 
                             <div class="simple-form-group">
                                 <label>Complemento</label>
-                                <input type="text" name="complement">
+                                <input type="text" name="complement" value="{{student.complement}}">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="simple-form-group">
                                 <label>Bairro *</label>
-                                <input type="text" name="neighborhood" required>
+                                <input type="text" name="neighborhood" value="{{student.neighborhood}}" required>
                             </div>
 
                             <div class="simple-form-group">
                                 <label>CEP *</label>
-                                <input type="text" name="zip_code" placeholder="00000-000" required>
+                                <input type="text" name="zip_code" placeholder="00000-000" value="{{student.zip_code    }}" required>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="simple-form-group">
                                 <label>Cidade *</label>
-                                <input type="text" name="city" required>
+                                <input type="text" name="city" value="{{student.city}}" required>
                             </div>
 
                             <div class="simple-form-group">
                                 <label>Estado *</label>
-                                <input type="text" name="state" placeholder="SP" maxlength="2" required>
+                                <input type="text" name="state" placeholder="SP" maxlength="2" value="{{student.state}}" required>
                             </div>
                         </div>
                     </div>
@@ -202,7 +205,7 @@
                 </div>
 
                 <div class="simple-modal-footer">
-                    <button type="button" onclick="closeModal('student')" class="btn-cancel">Cancelar</button>
+                    <a type="button" class="btn-cancel" href="{% url 'administrator:closeModal' %}"> Cancelar</button>
                     <button type="submit" class="btn-save" id="submit-btn">Salvar</button>
                 </div>
             </form>
