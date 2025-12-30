@@ -48,7 +48,7 @@ function filterTable() {
             }
         }
         
-        // Filtro por ano (precisa de implementação específica)
+        // Filtro por ano 
         if (grade) {
             const gradeCell = row.cells[3].textContent;
             if (!gradeCell.includes(grade.replace('ANO', 'º').replace('MEDIO', 'º EM'))) {

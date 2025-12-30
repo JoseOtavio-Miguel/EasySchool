@@ -46,10 +46,16 @@
     font-weight: 600;
 }
 
+.student-len {
+    font-weight:bold; 
+    font-size: 20px;
+    color: var(--info-color);
+}
 .subtitle {
     color: var(--dark-gray);
     font-size: 0.9rem;
     display: block;
+    text-align: center;
 }
 
 /* Formulário de Filtros */
@@ -92,7 +98,7 @@
     box-shadow: 0 0 0 3px rgba(74, 107, 175, 0.1);
 }
 
-/* Botão Filtrar */
+/* Button Filter */
 .btn.btn-primary {
     background-color: var(--primary-color);
     color: var(--white);
@@ -106,6 +112,11 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+/* Button Reset Filter */
+.btn-secondary {
+    margin-top: 0.6rem;
 }
 
 .btn.btn-primary:hover {

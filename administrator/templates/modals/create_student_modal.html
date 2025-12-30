@@ -1,10 +1,11 @@
 <!-- MODAL CREATE STUDENT -->
-<div class="simple-modal-overlay {% if open_student_modal %}active{% endif %}" id="modal-student">
+<div class="simple-modal-overlay {% if open_student_modal %}active{% endif %}" id="modal-student" data-modal="student">
     <div class="simple-modal">
         <!-- HEADER FIXED -->
         <div class="simple-modal-header form-scroll">
             <h3>Novo Estudante</h3>
-            <a id="closeStudentModal"><i class="fa-solid fa-xmark"></i></a>
+            <button class="simple-close" data-close-modal>&times;</button>
+
         </div>
         <div>
             <form method="post"

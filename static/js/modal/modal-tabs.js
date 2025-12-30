@@ -1,36 +1,9 @@
-const openBtn = document.getElementById("openStudentModal")
-const modal = document.getElementById("modal-student")
-const closeBtn = document.getElementById("closeStudentModal")
-
-const tabButtons = document.querySelectorAll('.tab-btn');
-const tabContents = document.querySelectorAll('.tab-content');
-
-
 /* Modal Tab consts */
 const modalTabList = ['personal', 'academic', 'contact', 'address'];
 let currentTabIndex = 0;
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
 
-/* Open Student Modal */
-openBtn.addEventListener("click", (e) =>
-{
-    e.preventDefault();
-    modal.classList.add("active");
-});
-
-/* Close Student Modal */
-closeBtn.addEventListener("click", (e) =>
-{
-    e.preventDefault();
-    modal.classList.remove("active");
-})
-
-/* Deactive the modal in the window */
-modal.addEventListener("click", (e) =>
-{
-    if (e.target === modal) {
-        modal.classList.remove("active");
-    }
-});
 
 
 /* Alter the current tab in the Student modal */
@@ -53,7 +26,8 @@ tabButtons.forEach(button => {
     button.addEventListener("click", () => {
         switchTab(button.dataset.tab);
     });
-});
+}); 
+
 
 /* NEXT / PREV */
 function nextTab() {
@@ -67,3 +41,8 @@ function prevTab() {
         switchTab(modalTabList[currentTabIndex - 1]);
     }
 }
+
+document.getElementById('resetFilters').addEventListener('click', () => {
+    document.querySelector('.filter-form').reset();
+    window.location.href = window.location.pathname;
+});
