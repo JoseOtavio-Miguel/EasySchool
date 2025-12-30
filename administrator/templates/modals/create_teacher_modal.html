@@ -1,8 +1,8 @@
-<!-- MODAL CRIAR ESTUDANTE -->
-<div class="simple-modal-overlay" id="modal-teacher">
+<!-- MODAL CREATE TEACHER -->
+<div class="simple-modal-overlay {% if open_teacher_modal %}active{% endif %}" id="modal-teacher">
     <div class="simple-modal">
-        <div class="simple-modal-header">
-            <h3>Novo Estudante</h3>
+        <div class="simple-modal-header form-scroll">
+            <h3>Novo Professor</h3>
             <button onclick="closeModal('teacher')" class="simple-close">&times;</button>
         </div>
 
@@ -87,33 +87,9 @@
                         </div>
 
                         <div class="simple-form-group">
-                            <label for="degree"> Formação </label>
+                            <label for="degree">Formação </label>
                             <input name="degree" id="degree" type="text" placeholder="Formação (Ex: Licenciatura em Física)">
                         </div>
-
-                        <label>Disciplinas</label>
-
-                        <div>
-                            <label>
-                                <input type="checkbox" name="subjects[]" value="A">
-                                Matemática
-                            </label>
-                        </div>
-
-                        <div>
-                            <label>
-                                <input type="checkbox" name="subjects[]" value="B">
-                                Física
-                            </label>
-                        </div>
-
-                        <div>
-                            <label>
-                                <input type="checkbox" name="subjects[]" value="C">
-                                Cálculo
-                            </label>
-                        </div>
-
                     </div>
 
                     <div class="simple-form-group">
@@ -127,11 +103,10 @@
                         </select>
                     </div>
 
-                    <div class="form-row">
-                        <div class="simple-form-group">
-                            <label>Número de Registro</label>
-                            <input name="registration_number" id="registration_number" type="text" name="registration_number">
-                        </div>
+                    <div class="simple-form-group">
+                        <label>Número de Registro</label>
+                        <input name="registration_number" id="registration_number" type="text" name="registration_number">
+                    </div>
 
 
                     <div class="form-row">
@@ -213,14 +188,15 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Navegation Controls -->
-                <div class="tab-navigation">
-                    <button type="button" class="btn-cancel" onclick="prevTab()">Anterior</button>
-                    <span class="tab-indicator">Página <span id="current-tab">1</span> de 4</span>
-                    <button type="button" class="btn-next" onclick="nextTab()">Próximo</button>
-                </div>
             </div>
+
+            <!-- Navegation Controls -->
+            <div class="tab-navigation">
+                <button type="button" class="btn-cancel" onclick="prevTab()">Anterior</button>
+                <span class="tab-indicator">Página <span id="current-tab">1</span> de 4</span>
+                <button type="button" class="btn-next" onclick="nextTab()">Próximo</button>
+            </div>
+
 
             <div class="simple-modal-footer">
                 <button type="button" onclick="closeModal('teacher')" class="btn-cancel">Cancelar</button>

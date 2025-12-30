@@ -1,0 +1,114 @@
+{% load teachers_filters %}
+
+<div class="teacher-page">
+
+    <!-- HEADER / FILTROS -->
+    <div class="teacher-header">
+        <div class="header-left">
+            <h2>Professores</h2>
+            <span class="subtitle">
+                {{ teachers|length }} professores cadastrados
+            </span>
+        </div>
+
+        <div class="header-right">
+            <div class="action-bar">
+                <a href="{% url 'administrator:openModal_create_teacher' %}" class="btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Novo Professor</span>
+                </a>
+            </div>
+
+            <form method="get" class="filter-form">
+                <input type="text"
+                       name="q"
+                       placeholder="Buscar professor..."
+                       value="{{ request.GET.q }}">
+
+                <select name="education_level">
+                    <option value="">Todas as formações</option>
+                    <option value="GRADUAÇÃO">Graduação</option>
+                    <option value="ESPECIALIZAÇÃO">Especialização</option>
+                    <option value="MESTRADO">Mestrado</option>
+                    <option value="DOUTORADO">Doutorado</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">
+                    Filtrar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TABELA -->
+    <div class="table-wrapper">
+        <table class="teacher-table">
+            <thead>
+                <tr>
+                    <th>Professor</th>
+                    <th>Registro</th>
+                    <th>Formação</th>
+                    <th>Contrato</th>
+                    <th>Turno</th>
+                    <th>Status</th>
+                    <th class="actions">Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for teacher in teachers %}
+                <tr>
+                    <td>
+                        <strong>{{ teacher.first_name }} {{ teacher.last_name }}</strong><br>
+                        <small>{{ teacher.email }}</small>
+                    </td>
+
+                    <td>{{ teacher.registration_number }}</td>
+
+                    <td>{{ teacher.education_level }}</td>
+
+                    <td>{{ teacher.contract_type }}</td>
+
+                    <td>{{ teacher.shift }}</td>
+
+                    <td>
+                        {% if teacher.is_active %}
+                            <span class="status active">Ativo</span>
+                        {% else %}
+                            <span class="status inactive">Inativo</span>
+                        {% endif %}
+                    </td>
+
+                    <td class="actions">
+                        <div>
+                            <a class="btn-icon edit"
+                               href="{% url 'administrator:openModal_edit_teacher' teacher.id %}">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </a>
+                        </div>
+
+                        <form method="post"
+                              action="{% url 'administrator:deactivate_teacher' teacher.id %}"
+                              style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="btn-icon delete"
+                                    title="Desativar professor">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="empty">
+                        Nenhum professor encontrado
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>

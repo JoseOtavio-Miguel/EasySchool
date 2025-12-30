@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.db.models import Q
 
 from student.models import Student
+from teacher.models import Teacher
 from administrator.forms import StudentForm  
 
 
@@ -15,6 +16,7 @@ def dashboard(request):
     return render(request, 'dashboard_admin/dashboard.html')
 
 from django.db.models import Q
+
 
 def list_students(request):
     students = Student.objects.all()
@@ -43,6 +45,18 @@ def list_students(request):
 
 
 
+def list_teachers(request):
+    teachers = Teacher.objects.all()
+
+    context = {
+        'teachers': teachers,
+        'page': 'list_teachers',
+        'open_teacher_modal': request.session.pop('open_teacher_modal', False),
+    }
+
+    return render(request, 'dashboard_admin/dashboard.html', context)
+
+
 
 def edit_student(request, student_id):
     student = get_object_or_404(Student, id=student_id)
@@ -63,6 +77,7 @@ def edit_student(request, student_id):
     }
     return render(request, 'dashboard_admin/edit_student.html', context)
 
+
 def deactivate_student(request, student_id):
     if request.method == 'POST':
         student = get_object_or_404(Student, id=student_id)
@@ -73,7 +88,7 @@ def deactivate_student(request, student_id):
     return redirect('administrator:list_students')  
 
 
-
+"""
 def openModal_create(request):
     students = Student.objects.all()
     enrollment = str(students.count() + 1).zfill(4)
@@ -86,6 +101,19 @@ def openModal_create(request):
     }
 
     return render(request, 'dashboard_admin/dashboard.html', context)
+"""
+
+def openModal_create_teacher(request):
+    teachers = Teacher.objects.all()
+
+    context = {
+        'teachers': teachers,
+        'open_teacher_modal': True,
+        'page': 'list_teachers',
+    }
+
+    return render(request, 'dashboard_admin/dashboard.html', context)
+
 
 
 def openModal_edit(request, student_id):

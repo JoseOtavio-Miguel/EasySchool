@@ -14,6 +14,8 @@
 
     {% if page == "list_students" %}
         {% include "student/list.html" %}
+    {% elif page == "list_teachers" %}
+        {% include "teachers/list.html" %}
     {% else %}
         {% include "content/content.html" %}
     {% endif %}
@@ -24,9 +26,8 @@
 
 <!-- Scripts Extras -->
 {% block extra_js %}
-    <script src="{% static 'js/modal_student/select_grade.js' %}"></script>
-    <script src="{% static 'js/global.js' %}"></script> 
-    <script src="{% static 'js/modal_student/mask.js' %}"></script>  
-    <script src="{% static 'js/modal_student/create_student_modal.js' %}"></script>
-
+    <script src="{% static 'js/global.js' %}"></script>
+    <script src="{% static 'js/modal/StudentModal.js' %}"></script>
+    <script src="{% static 'js/student/select_grade.js' %}"></script>
+    <script src="{% static 'js/mask/mask.js' %}"></script>  
 {% endblock %}

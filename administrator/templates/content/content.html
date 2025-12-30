@@ -20,12 +20,14 @@
             </div>
         </a>
             
-            <div class="action-card" onclick="openCreateModal('teacher')">
-                <div class="action-icon">
-                    <i class="fas fa-user-tie"></i>
-                </div>
-                <h4>Novo Professor</h4>
-                <p>Adicione um novo professor ao corpo docente com suas disciplinas e turmas.</p>
+            <div class="action-card">
+                <a href="{% url 'administrator:list_teachers' %}" style="text-decoration:none; color:inherit;">
+                    <div class="action-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4>Gerenciar Professor</h4>
+                    <p>Adicione e edite dados do professor com suas disciplinas e turmas.</p>
+                </a>
             </div>
         
         <div class="action-card" onclick="openCreateModal('parent')">

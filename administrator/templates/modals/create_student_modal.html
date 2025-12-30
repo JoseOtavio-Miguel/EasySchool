@@ -4,9 +4,9 @@
         <!-- HEADER FIXED -->
         <div class="simple-modal-header form-scroll">
             <h3>Novo Estudante</h3>
-            <a href="{% url 'administrator:closeModal' %}"><i class="fa-solid fa-xmark"></i></a>
+            <a id="closeStudentModal"><i class="fa-solid fa-xmark"></i></a>
         </div>
-        <div class="simple-modal-body">
+        <div>
             <form method="post"
                 action="{% if is_edit %}
                     {% url 'student:student_edit_account' student.id %}
@@ -19,10 +19,10 @@
                 <div class="simple-modal-body ">
                     <!-- Buttons -->
                     <div class="form-tabs">
-                        <button type="button" class="tab-btn active" onclick="switchTab('personal')">Dados Pessoais</button>
-                        <button type="button" class="tab-btn" onclick="switchTab('academic')">Dados Acadêmicos</button>
-                        <button type="button" class="tab-btn" onclick="switchTab('contact')">Contato</button>
-                        <button type="button" class="tab-btn" onclick="switchTab('address')">Endereço</button>
+                        <button type="button" class="tab-btn active" data-tab="personal">Dados Pessoais</button>
+                        <button type="button" class="tab-btn" data-tab="academic">Dados Acadêmicos</button>
+                        <button type="button" class="tab-btn" data-tab="contact">Contato</button>
+                        <button type="button" class="tab-btn" data-tab="address">Endereço</button>
                     </div>
 
                     <!-- Personal Data -->

@@ -1,0 +1,18 @@
+.teacher-page {
+    margin-left: 10rem;
+    box-shadow: 0 8px 24px var(--border-color);
+    border-radius: 0.8rem;
+}
+
+.teacher-header {
+    padding: 2rem 2rem 2rem 2rem;
+}
+
+.action-bar {
+    padding-top: 1.2rem;
+}
+
+.table-wrapper {
+    padding-left: 2rem;
+    padding-top: 2rem;
+}
