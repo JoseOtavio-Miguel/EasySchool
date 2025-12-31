@@ -1,8 +1,10 @@
+/* Open Modal Function */
 function openCreateModal(type) {
     const modal = document.getElementById(`modal-${type}`);
     if (modal) modal.classList.add('active');
 }
 
+/* Close Modal Function */
 function closeModal(type) {
     const modal = document.getElementById(`modal-${type}`);
     if (modal) modal.classList.remove('active');

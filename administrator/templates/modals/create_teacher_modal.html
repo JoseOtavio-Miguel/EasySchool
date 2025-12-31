@@ -1,5 +1,12 @@
+
+{% if is_edit_teacher %}
+    {% url 'administrator:teacher_edit_account' teacher.id  %}
+{% else %}
+    {% url 'administrator:teacher_create_account' %}
+{% endif %}
+
 <!-- MODAL CREATE TEACHER -->
-<div class="simple-modal-overlay" id="modal-teacher" data-modal="teacher">
+<div class="simple-modal-overlay {% if open_teacher_modal %}active{% endif %}"  id="modal-teacher" data-modal="teacher">
     <div class="simple-modal">
 
         <!-- HEADER FIXED -->
@@ -9,12 +16,8 @@
         </div>
 
         <div>
-            <form method="post" action="{% if is_edit %}
-                  {% url 'administrator:teacher_edit_account' teacher.id %}
-              {% else %}
-                  {% url 'administrator:teacher_create_account' %}
-              {% endif %}">
-                {% csrf_token %}
+            <form method="post" action="{{ form_action }}">
+                {% csrf_token %}    
 
                 <div class="simple-modal-body modal-scrollable">
 

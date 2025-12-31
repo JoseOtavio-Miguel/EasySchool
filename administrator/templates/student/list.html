@@ -88,10 +88,13 @@
                     </td>
 
                     <td class="actions">
-                        <div>
-                            <a class="btn-icon edit" href="{% url 'administrator:openModal_edit' student.id %}">
+                        <div style="margin-bottom: 0.4rem;"> 
+                            <button class="btn btn-primary"
+                            data-open-modal="student"
+                            data-mode="edit"
+                            data-student-id="{{ student.id }}">
                                 <i class="fa-regular fa-pen-to-square"></i>
-                            </a>
+                            </button>
                         </div>
 
                         <form method="post"
@@ -99,8 +102,9 @@
                               style="display:inline;">
                             {% csrf_token %}
                             <button type="submit"
-                                    class="btn-icon delete"
-                                    title="Desativar aluno">
+                                    class="btn btn-primary"
+                                    title="Desativar aluno"
+                                    style="background-color: red;">
                                     <i class="fa-solid fa-trash"></i>
                             </button>
                         </form>

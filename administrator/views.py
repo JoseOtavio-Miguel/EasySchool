@@ -1,14 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404    
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.urls import reverse
 from django.db.models import Q
 from django.db import transaction
-from django.contrib import messages
+from django.http import JsonResponse
 
+# Form Import
+from administrator.forms import StudentForm 
 
+# Models Import
+from accounts.models import User
 from student.models import Student
 from teacher.models import Teacher
-from administrator.forms import StudentForm  
+ 
 
 
 # Create your views here.
@@ -81,6 +86,8 @@ def edit_student(request, student_id):
     return render(request, 'dashboard_admin/edit_student.html', context)
 
 
+
+
 def deactivate_student(request, student_id):
     if request.method == 'POST':
         student = get_object_or_404(Student, id=student_id)
@@ -89,6 +96,7 @@ def deactivate_student(request, student_id):
         messages.success(request, f'Aluno {student.name} desativado com sucesso!')
     
     return redirect('administrator:list_students')  
+
 
 
 def deactivate_teacher(request, student_id):
@@ -100,82 +108,6 @@ def deactivate_teacher(request, student_id):
     
     return redirect('administrator:list_teacher')  
 
-
-"""
-def openModal_create(request):
-    students = Student.objects.all()
-    enrollment = str(students.count() + 1).zfill(4)
-
-    context = {
-        'students': students,
-        'enrollment': enrollment,
-        'open_student_modal': True,
-        'page': 'list_students',
-    }
-
-    return render(request, 'dashboard_admin/dashboard.html', context)
-"""
-
-def openModal_create_teacher(request):
-    teachers = Teacher.objects.all()
-
-    context = {
-        'teachers': teachers,
-        'open_teacher_modal': True,
-        'page': 'list_teachers',
-    }
-
-    return render(request, 'dashboard_admin/dashboard.html', context)
-
-
-def openModal_edit_teacher(request, student_id):
-    teachers = Teacher.objects.all()
-    teacher = get_object_or_404(Teacher, id=student_id)
-
-    context = {
-        'teachers': teachers,
-        'teacher': teacher,
-        'open_teacher_modal': True,
-        'page': 'list_teacher',
-
-        "is_edit": True,
-        "form_action": reverse("administrator:teacher_edit_account", args=[teacher.id]),
-        "teacher": teacher,
-    }
-
-    return render(request, 'dashboard_admin/dashboard.html', context)
-
-
-def openModal_edit(request, student_id):
-    students = Student.objects.all()
-    student = get_object_or_404(Student, id=student_id)
-
-    context = {
-        'students': students,
-        'student': student,
-        'open_student_modal': True,
-        'page': 'list_students',
-
-        "is_edit": True,
-        "form_action": reverse("student:student_edit_account", args=[student.id]),
-        "student": student,
-    }
-
-    return render(request, 'dashboard_admin/dashboard.html', context)   
-
-def closeModal(request):
-    students = Student.objects.all() 
-    student = get_object_or_404(Student, id=student_id)
-
-    context = {
-        'open_student_modal': False,
-        'student_id': student_id,
-        'students': students,
-        'student': student,
-        'page': 'list_students',
-    }
-
-    return render(request, 'dashboard_admin/dashboard.html', context)
 
 
 
@@ -251,7 +183,7 @@ def teacher_create_account(request):
             messages.error(request, f"Erro ao cadastrar professor: {e}")
 
         context = {
-        "is_edit": False,
+        "is_edit_teacher": False,
         "form_action": reverse("teacher:teacher_create_account"),
         "teacher": None,
         'page': 'list_teachers',
@@ -314,8 +246,116 @@ def teacher_edit_account(request, teacher_id):
         'page': 'list_teachers',
         'open_teacher_modal': False,
 
-        "is_edit": True,
-        "form_action": reverse("teacher:teacher_create_account", args=[teacher.id]),
+        "is_edit_teacher": True,
+        "form_action": reverse("teacher:teacher_create_account"),
     }
 
     return render(request, "dashboard_admin/dashboard.html", context)
+
+
+# Dashboard view - Redirect to user´s dashboard [ User / Teacher / Admin ...]
+@login_required
+def dashboard(request):
+    if request.user.role != 'student':
+        return redirect('administrator:dashboard')
+    return render(request, 'dashboard_student/dashboard.html')
+
+
+# Create your views here.
+def index(request):
+    return render(request, 'homepage.html')
+
+
+#### STUDENT´S VIEWS ####
+
+@transaction.atomic
+def load_student(request):
+    if request.method == 'POST':
+        student_id = request.POST.get('student_id')
+        
+        try:
+            # EDIT MODE
+            if student_id and student_id.strip():
+                student = get_object_or_404(Student, id=student_id)
+                mode = "editado"
+            # CREATE MODE
+            else:
+                student = Student()
+                mode = "criado"
+            
+            # Preencher dados
+            student.first_name = request.POST.get('first_name')
+            student.last_name = request.POST.get('last_name')
+            student.cpf = request.POST.get('cpf')
+            student.rg = request.POST.get('rg', '')
+            student.date_of_birth = request.POST.get('date_of_birth')
+            student.gender = request.POST.get('gender')
+            
+            # Academic
+            student.enrollment_number = request.POST.get('enrollment_number')
+            student.grade_level = request.POST.get('grade_level')
+            student.specific_grade = request.POST.get('specific_grade')
+            student.shift = request.POST.get('shift')
+            
+            # Contact
+            student.father_name = request.POST.get('father_name', '')
+            student.mother_name = request.POST.get('mother_name', '')
+            student.guardian_name = request.POST.get('guardian_name', '')
+            student.email = request.POST.get('email')
+            student.phone = request.POST.get('phone')
+            student.guardian_phone = request.POST.get('guardian_phone', '')
+            
+            # Address
+            student.address = request.POST.get('address')
+            student.address_number = request.POST.get('address_number')
+            student.complement = request.POST.get('complement', '')
+            student.neighborhood = request.POST.get('neighborhood')
+            student.zip_code = request.POST.get('zip_code')
+            student.city = request.POST.get('city')
+            student.state = request.POST.get('state')
+            
+            # Salvar
+            student.save()
+            
+            messages.success(request, f'Estudante {mode} com sucesso!')
+            return redirect('student:dashboard')
+            
+        except Exception as e:
+            messages.error(request, f'Erro ao salvar: {str(e)}')
+            return redirect('student:dashboard')
+    
+    return redirect('student:dashboard')
+
+
+
+
+def student_detail(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    
+    return JsonResponse({
+        "id": student.id,
+        "first_name": student.first_name or '',
+        "last_name": student.last_name or '',
+        "cpf": student.cpf or '',
+        "rg": student.rg or '',
+        "date_of_birth": student.date_of_birth.isoformat() if student.date_of_birth else '',
+        "gender": student.gender or '',
+        "enrollment_number": student.enrollment_number or '',
+        "grade_level": student.grade_level or '',
+        "specific_grade": student.specific_grade or '',
+        "shift": student.shift or '',
+        "father_name": student.father_name or '',
+        "mother_name": student.mother_name or '',
+        "guardian_name": student.guardian_name or '',
+        "email": student.email or '',
+        "phone": student.phone or '',
+        "guardian_phone": student.guardian_phone or '',
+        "address": student.address or '',
+        "address_number": student.address_number or '',
+        "complement": student.complement or '',
+        "neighborhood": student.neighborhood or '',
+        "zip_code": student.zip_code or '',
+        "city": student.city or '',
+        "state": student.state or ''
+    })
+
