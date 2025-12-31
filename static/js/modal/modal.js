@@ -20,7 +20,8 @@ document.querySelectorAll('[data-open-modal]').forEach(button => {
             if (modalTitle) modalTitle.textContent = 'Editar Estudante';
             
             // URL correta baseada no seu urls.py
-            const url = `/student/students/${studentId}/json/`;
+            // JavaScript
+            const url = `/administrator/students/${studentId}/json/`;   
             console.log('Fetching from:', url); // Debug
             
             fetch(url)

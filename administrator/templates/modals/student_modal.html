@@ -9,7 +9,7 @@
         </div>
         <div>
             <form method="post"
-                action="{% url 'student:load_student'%}">
+                action="{% url 'administrator:load_student'%}">
                 {% csrf_token %}
                 <input type="hidden" name="student_id" id="student_id">
 

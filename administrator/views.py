@@ -16,7 +16,10 @@ from teacher.models import Teacher
  
 
 
-# Create your views here.
+def index(request):
+    return render(request, 'homepage.html')
+
+
 @login_required
 def dashboard(request):
     if request.user.role != 'admin':
@@ -26,6 +29,7 @@ def dashboard(request):
 from django.db.models import Q
 
 
+# List Students #
 def list_students(request):
     students = Student.objects.all()
 
@@ -63,28 +67,6 @@ def list_teachers(request):
     }
 
     return render(request, 'dashboard_admin/dashboard.html', context)
-
-
-
-def edit_student(request, student_id):
-    student = get_object_or_404(Student, id=student_id)
-    
-    if request.method == 'POST':
-        form = StudentForm(request.POST, instance=student)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Aluno atualizado com sucesso!')
-            return redirect('administrator:list_students') 
-    else:
-        form = StudentForm(instance=student)
-    
-    context = {
-        'form': form,
-        'student': student,
-        'page': 'edit_student',
-    }
-    return render(request, 'dashboard_admin/edit_student.html', context)
-
 
 
 
@@ -253,21 +235,10 @@ def teacher_edit_account(request, teacher_id):
     return render(request, "dashboard_admin/dashboard.html", context)
 
 
-# Dashboard view - Redirect to user´s dashboard [ User / Teacher / Admin ...]
-@login_required
-def dashboard(request):
-    if request.user.role != 'student':
-        return redirect('administrator:dashboard')
-    return render(request, 'dashboard_student/dashboard.html')
 
 
-# Create your views here.
-def index(request):
-    return render(request, 'homepage.html')
 
-
-#### STUDENT´S VIEWS ####
-
+# STUDENT´S VIEWS #
 @transaction.atomic
 def load_student(request):
     if request.method == 'POST':
