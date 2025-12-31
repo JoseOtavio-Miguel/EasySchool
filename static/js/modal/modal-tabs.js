@@ -1,48 +1,73 @@
-/* Modal Tab consts */
-const modalTabList = ['personal', 'academic', 'contact', 'address'];
-let currentTabIndex = 0;
-const tabButtons = document.querySelectorAll('.tab-btn');
-const tabContents = document.querySelectorAll('.tab-content');
+/* OPEN MODAL */
+document.querySelectorAll('[data-open-modal]').forEach(button => {
+    button.addEventListener('click', e => {
+        e.preventDefault();
+        const modalName = button.dataset.openModal;
+        const modal = document.querySelector(`[data-modal="${modalName}"]`);
+        modal?.classList.add('active');
 
-
-
-/* Alter the current tab in the Student modal */
-function switchTab(tabName) {
-    /* Content */
-    tabContents.forEach(tab => tab.classList.remove('active'));
-    document.getElementById(`${tabName}-tab`).classList.add('active');
-
-    /* Buttons */
-    tabButtons.forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active')
-
-    /* Index */
-    currentTabIndex = modalTabList.indexOf(tabName);
-    document.getElementById("current-tab").textContent = currentTabIndex + 1;
-}
-
-/* Buttons Click */
-tabButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        switchTab(button.dataset.tab);
+        initModalTabs(modal); // inicializa abas do modal aberto
     });
-}); 
-
-
-/* NEXT / PREV */
-function nextTab() {
-    if (currentTabIndex < modalTabList.length - 1) {
-        switchTab(modalTabList[currentTabIndex + 1]);
-    }
-}
-
-function prevTab() {
-    if (currentTabIndex > 0) {
-        switchTab(modalTabList[currentTabIndex - 1]);
-    }
-}
-
-document.getElementById('resetFilters').addEventListener('click', () => {
-    document.querySelector('.filter-form').reset();
-    window.location.href = window.location.pathname;
 });
+
+/* CLOSE MODAL */
+document.querySelectorAll('[data-close-modal]').forEach(button => {
+    button.addEventListener('click', () => {
+        button.closest('.simple-modal-overlay')
+              .classList.remove('active');
+    });
+});
+
+/* CLOSE CLICK OUTSIDE */
+document.querySelectorAll('.simple-modal-overlay').forEach(modal => {
+    modal.addEventListener('click', e => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+});
+
+/* ===========================
+   MODAL TABS (ESCOPADO)
+=========================== */
+
+function initModalTabs(modal) {
+    const tabList = ['personal', 'academic', 'contact', 'address'];
+    let currentIndex = 0;
+
+    const tabButtons = modal.querySelectorAll('.tab-btn');
+    const tabContents = modal.querySelectorAll('.tab-content');
+    const indicator = modal.querySelector('[data-current-tab]');
+
+    function switchTab(tabName) {
+        tabContents.forEach(tab => tab.classList.remove('active'));
+        modal.querySelector(`#${tabName}-tab`)?.classList.add('active');
+
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        modal.querySelector(`.tab-btn[data-tab="${tabName}"]`)
+             ?.classList.add('active');
+
+        currentIndex = tabList.indexOf(tabName);
+        if (indicator) indicator.textContent = currentIndex + 1;
+    }
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            switchTab(button.dataset.tab);
+        });
+    });
+
+    modal.querySelector('[data-next-tab]')?.addEventListener('click', () => {
+        if (currentIndex < tabList.length - 1) {
+            switchTab(tabList[currentIndex + 1]);
+        }
+    });
+
+    modal.querySelector('[data-prev-tab]')?.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            switchTab(tabList[currentIndex - 1]);
+        }
+    });
+
+    switchTab(tabList[0]); // inicia na primeira aba
+}

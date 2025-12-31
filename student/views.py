@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from student.models import Student
 from accounts.models import User
+from django.db import transaction
+
 
 app_name = "student"
 
@@ -17,7 +19,6 @@ def dashboard(request):
 # Create your views here.
 def index(request):
     return render(request, 'homepage.html')
-from django.db import transaction
 
 
 @transaction.atomic
@@ -80,7 +81,7 @@ def student_create_account(request):
             messages.error(request, f"Erro ao cadastrar estudante: {e}")
 
 
-    return render(request, "student/list.html", context)
+    return render(request, "administrator:list_teachers", context)
 
 
 

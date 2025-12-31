@@ -20,7 +20,8 @@
 }
 
 /* ===== CONTAINER PRINCIPAL ===== */
-.student-page {
+.student-page,
+.teacher-page {
     padding: 2rem;
     background-color: var(--light-gray);
     min-height: 100vh;
@@ -28,7 +29,8 @@
 }
 
 /* ===== HEADER / FILTROS ===== */
-.student-header {
+.student-header,
+.teacher-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -138,18 +140,21 @@
     margin-top: 1.5rem;
 }
 
-.student-table {
+.student-table,
+.teacher-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.9rem;
 }
 
-.student-table thead {
+.student-table thead,
+.teacher-table thead {
     background-color: var(--primary-color);
     color: var(--white);
 }
 
-.student-table th {
+.student-table th,
+.teacher-table th {
     padding: 1rem;
     text-align: left;
     font-weight: 600;
@@ -158,33 +163,39 @@
     letter-spacing: 0.5px;
 }
 
-.student-table th.actions {
+.student-table th.actions,
+.teacher-table th.actions {
     text-align: center;
     width: 120px;
 }
 
-.student-table tbody tr {
+.student-table tbody tr,
+.teacher-table tbody tr {
     border-bottom: 1px solid var(--border-color);
     transition: var(--transition);
 }
 
-.student-table tbody tr:hover {
+.student-table tbody tr:hover,
+.teacher-table tbody tr:hover {
     background-color: rgba(74, 107, 175, 0.05);
 }
 
-.student-table td {
+.student-table td,
+.teacher-table td {
     padding: 1rem;
     vertical-align: middle;
 }
 
-.student-table td strong {
+.student-table td strong,
+.teacher-table td strong {
     color: #2c3e50;
     font-weight: 600;
     display: block;
     margin-bottom: 0.25rem;
 }
 
-.student-table td small {
+.student-table td small,
+.teacher-table td small {
     color: var(--dark-gray);
     font-size: 0.8rem;
 }

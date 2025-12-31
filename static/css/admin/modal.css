@@ -51,7 +51,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    overflow-y: auto;
+    overflow: hidden;
     flex: 1;
 }
 
@@ -88,11 +88,22 @@
 /* CONTEÚDO DAS ABAS */
 .tab-content {
     display: none;
-    animation: fadeIn 0.3s;
+    overflow-y: auto;
+    max-height: 55vh; /* controla altura do scroll */
+    padding-right: 8px;
 }
 
 .tab-content.active {
     display: block;
+}
+
+.tab-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
 }
 
 @keyframes fadeIn {

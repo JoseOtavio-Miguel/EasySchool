@@ -12,14 +12,16 @@
         </div>
 
         <div class="header-right">
-            <div class="action-bar">
-                <a href="{% url 'administrator:openModal_create_teacher' %}" class="btn-primary">
-                    <i class="fas fa-user-plus"></i>
-                    <span>Novo Professor</span>
-                </a>
+            <div class="header-right">
+                <div class="action-bar">
+                    <button  class="btn btn-primary" data-open-modal="teacher" style="margin-bottom:0.8rem;">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Novo Professor</span>
+                    </button>
+                </div>
             </div>
 
-            <form method="get" class="filter-form">
+            <form method="get" class="filter-form form-scroll">
                 <input type="text"
                        name="q"
                        placeholder="Buscar professor..."
@@ -81,10 +83,7 @@
 
                     <td class="actions">
                         <div>
-                            <a class="btn-icon edit"
-                               href="{% url 'administrator:openModal_edit_teacher' teacher.id %}">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </a>
+                            <a class="btn-icon edit" href="{% url 'administrator:teacher_edit_account' teacher.id %}">
                         </div>
 
                         <form method="post"
