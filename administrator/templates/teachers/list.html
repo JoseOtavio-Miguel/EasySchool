@@ -51,7 +51,7 @@
                     <th>Registro</th>
                     <th>Formação</th>
                     <th>Contrato</th>
-                    <th>Turno</th>
+                    <th>Data do Contrato</th>
                     <th>Status</th>
                     <th class="actions">Ações</th>
                 </tr>
@@ -71,7 +71,7 @@
 
                     <td>{{ teacher.contract_type }}</td>
 
-                    <td>{{ teacher.shift }}</td>
+                    <td>{{ teacher.hire_date }}</td>
 
                     <td>
                         {% if teacher.is_active %}
