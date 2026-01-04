@@ -1,279 +1,270 @@
-
-{% if is_edit_teacher %}
-    {% url 'administrator:teacher_edit_account' teacher.id  %}
-{% else %}
-    {% url 'administrator:teacher_create_account' %}
-{% endif %}
-
-<!-- MODAL CREATE TEACHER -->
-<div class="simple-modal-overlay {% if open_teacher_modal %}active{% endif %}"  id="modal-teacher" data-modal="teacher">
-    <div class="simple-modal">
-
-        <!-- HEADER FIXED -->
-        <div class="simple-modal-header modal-scrollable">
-            <h3>Novo Professor</h3>
-            <button class="simple-close" data-close-modal>&times;</button>
-        </div>
-
-        <div>
-            <form method="post" action="{{ form_action }}">
+    <!-- MODAL CREATE TEACHER -->
+    <div class="simple-modal-overlay {% if open_teacher_modal %}active{% endif %}"  id="modal-teacher" data-modal="teacher">
+        <div class="simple-modal">
+            <!-- HEADER  -->
+            <div class="simple-modal-header modal-scrollable">
+                <h3>Novo Professor</h3>
+                <button class="simple-close" data-close-modal>&times;</button>
+            </div>
+            <div>
+                <form method="post" enctype="multipart/form-data" 
+                  action="{% url 'administrator:load_teacher' %}">
                 {% csrf_token %}    
-
-                <div class="simple-modal-body modal-scrollable">
-
-                    <!-- TABS -->
-                    <div class="form-tabs">
-                        <button type="button" class="tab-btn active" data-tab="personal">Dados Pessoais</button>
-                        <button type="button" class="tab-btn" data-tab="professional">Dados Profissionais</button>
-                        <button type="button" class="tab-btn" data-tab="contract">Contrato</button>
-                        <button type="button" class="tab-btn" data-tab="contact">Contato</button>
-                        <button type="button" class="tab-btn" data-tab="address">Endereço</button>
-                    </div>
-
-                    <!-- ================= DADOS PESSOAIS ================= -->
-                    <div class="tab-content active" id="personal-tab">
-
-                        <div class="simple-form-group">
-                            <label>Nome *</label>
-                            <input type="text" name="first_name" required>
+                <input type="hidden" name="teacher_id" id="teacher_id">
+                    {% csrf_token %}    
+                    <div class="simple-modal-body modal-scrollable">
+                        <!-- TABS -->
+                        <div class="form-tabs">
+                            <button type="button" class="tab-btn active" data-tab="personal">Dados Pessoais</button>
+                            <button type="button" class="tab-btn" data-tab="professional">Dados Profissionais</button>
+                            <button type="button" class="tab-btn" data-tab="contract">Contrato</button>
+                            <button type="button" class="tab-btn" data-tab="contact">Contato</button>
+                            <button type="button" class="tab-btn" data-tab="address">Endereço</button>
                         </div>
 
-                        <div class="simple-form-group">
-                            <label>Sobrenome *</label>
-                            <input type="text" name="last_name" required>
-                        </div>
+                        <!-- ================= DADOS PESSOAIS ================= -->
+                        <div class="tab-content active" id="personal-tab">
+                                <div class="simple-form-group">
+                                    <label>Nome *</label>
+                                    <input type="text" id="first_name" name="first_name" required>
+                                </div>
 
-                        <div class="form-row">
                             <div class="simple-form-group">
-                                <label>CPF *</label>
-                                <input type="text" name="cpf" required>
+                                <label>Sobrenome *</label>
+                                <input type="text" id="last_name" name="last_name" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="simple-form-group">
+                                    <label>CPF *</label>
+                                    <input type="text" id="cpf" name="cpf" required>
+                                </div>
+
+                                <div class="simple-form-group">
+                                    <label>RG</label>
+                                    <input type="text" id="rg" name="rg">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="simple-form-group">
+                                    <label>Data de Nascimento *</label>
+                                    <input type="date" id="date_of_birth" name="date_of_birth" required>
+                                </div>
+
+                                <div class="simple-form-group">
+                                    <label>Gênero *</label>
+                                    <select id="gender" name="gender" required>
+                                        <option value="">Selecione</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Feminino</option>
+                                        <option value="O">Outro</option>
+                                        <option value="N">Prefiro não informar</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- ================= DADOS PROFISSIONAIS ================= -->
+                        <div class="tab-content" id="professional-tab" style="overflow-y: auto;" >
+
+                            <div class="simple-form-group">
+                                <label>Registro Funcional *</label>
+                                <input type="text" name="registration_number" id="registration_number" required>
                             </div>
 
                             <div class="simple-form-group">
-                                <label>RG</label>
-                                <input type="text" name="rg">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="simple-form-group">
-                                <label>Data de Nascimento *</label>
-                                <input type="date" name="date_of_birth" required>
-                            </div>
-
-                            <div class="simple-form-group">
-                                <label>Gênero *</label>
-                                <select name="gender" required>
+                                <label>Nível de Formação *</label>
+                                <select name="education_level" id="education_level"  required>
                                     <option value="">Selecione</option>
-                                    <option value="M">Masculino</option>
-                                    <option value="F">Feminino</option>
-                                    <option value="O">Outro</option>
-                                    <option value="N">Prefiro não informar</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- ================= DADOS PROFISSIONAIS ================= -->
-                    <div class="tab-content" id="professional-tab" style="overflow-y: auto;" >
-
-                        <div class="simple-form-group">
-                            <label>Registro Funcional *</label>
-                            <input type="text" name="registration_number" required>
-                        </div>
-
-                        <div class="simple-form-group">
-                            <label>Nível de Formação *</label>
-                            <select name="education_level" required>
-                                <option value="">Selecione</option>
-                                <option value="GRADUACAO">Graduação</option>
-                                <option value="ESPECIALIZACAO">Especialização</option>
-                                <option value="MESTRADO">Mestrado</option>
-                                <option value="DOUTORADO">Doutorado</option>
-                            </select>
-                        </div>
-
-                        <div class="simple-form-group">
-                            <label>Formação *</label>
-                            <input type="text" name="degree" required placeholder="Ex: Licenciatura em Matemática">
-                        </div>
-
-                        <div class="simple-form-group">
-                            <label>Disciplinas *</label>
-                            <input type="text" name="subjects" required placeholder="Separe com vírgula">
-                            <small class="form-help">Separe as disciplinas com vírgula</small>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="simple-form-group">
-                                <label>É Coordenador?</label>
-                                <select name="is_coordinator">
-                                    <option value="0">Não</option>
-                                    <option value="1">Sim</option>
+                                    <option value="GRADUACAO">Graduação</option>
+                                    <option value="ESPECIALIZACAO">Especialização</option>
+                                    <option value="MESTRADO">Mestrado</option>
+                                    <option value="DOUTORADO">Doutorado</option>
                                 </select>
                             </div>
 
-                            <div class="simple-form-group" id="coordinator-area-field" style="display: none;">
-                                <label>Área de Coordenação</label>
-                                <input type="text" name="coordinator_area" placeholder="Ex: Matemática, Português">
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- ================= CONTRATO ================= -->
-                    <div class="tab-content" id="contract-tab">
-
-                        <div class="simple-form-group">
-                            <label>Tipo de Contrato *</label>
-                            <select name="contract_type" required>
-                                <option value="">Selecione</option>
-                                <option value="CLT">CLT</option>
-                                <option value="PJ">Pessoa Jurídica</option>
-                                <option value="TEMPORARIO">Temporário</option>
-                                <option value="HORISTA">Horista</option>
-                            </select>
-                        </div>
-
-                        <div class="form-row">
                             <div class="simple-form-group">
-                                <label>Data de Contratação *</label>
-                                <input type="date" name="hire_date" required>
+                                <label>Formação *</label>
+                                <input type="text" name="degree" id="degree"  required placeholder="Ex: Licenciatura em Matemática">
                             </div>
 
                             <div class="simple-form-group">
-                                <label>Carga Horária Semanal *</label>
-                                <input type="number" name="workload" value="40" min="1" max="60" required>
-                            </div>
-                        </div>
-
-                        <div class="simple-form-group">
-                            <label>Salário</label>
-                            <input id="salary" type="number" name="salary" step="0.01" placeholder="R$ 0,00">
-                        </div>
-
-                        <div class="form-row">
-                            <div class="simple-form-group">
-                                <label>Foto</label>
-                                <input type="file" id="photo" name="photo" accept="image/*">
+                                <label>Disciplinas *</label>
+                                <input type="text" name="subjects" id="subjects" required placeholder="Separe com vírgula">
+                                <small class="form-help">Separe as disciplinas com vírgula</small>
                             </div>
 
-                            <div class="simple-form-group">
-                                <label>Currículo</label>
-                                <input type="file" name="curriculum" id="curriculum" accept=".pdf,.doc,.docx">
-                            </div>
-                        </div>
+                            <div class="form-row">
+                                <div class="simple-form-group">
+                                    <label>É Coordenador?</label>
+                                    <select name="is_coordinator" id="is_coordinator" >
+                                        <option value="0" {% if teacher.is_coordinator == 0 %}selected {% endif %}>Não</option>
+                                        <option value="1" {% if teacher.is_coordinator == 1 %}selected {% endif %}>Sim</option>
+                                    </select>
+                                </div>
 
-                    </div>
-
-                    <!-- ================= CONTATO ================= -->
-                    <div class="tab-content" id="contact-tab">
-
-                        <div class="simple-form-group">
-                            <label>E-mail *</label>
-                            <input type="email" name="email" required>
-                        </div>
-
-                        <div class="simple-form-group">
-                            <label>Telefone *</label>
-                            <input type="text" name="phone" required>
-                        </div>
-
-                    </div>
-
-                    <!-- ================= ENDEREÇO ================= -->
-                    <div class="tab-content" id="address-tab">
-
-                        <div class="simple-form-group">
-                            <label>Endereço *</label>
-                            <input type="text" name="address" required>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="simple-form-group">
-                                <label>Número *</label>
-                                <input type="text" name="address_number" required>
+                                <div class="simple-form-group" id="coordinator-area-field" style="display: none;">
+                                    <label>Área de Coordenação</label>
+                                    <input type="text" name="coordinator_area" id="coordinator_area" placeholder="Ex: Matemática, Português">
+                                </div>
                             </div>
 
-                            <div class="simple-form-group">
-                                <label>Complemento</label>
-                                <input type="text" name="complement">
-                            </div>
                         </div>
 
-                        <div class="form-row">
-                            <div class="simple-form-group">
-                                <label>Bairro *</label>
-                                <input type="text" name="neighborhood" required>
-                            </div>
+                        <!-- ================= CONTRATO ================= -->
+                        <div class="tab-content" id="contract-tab">
 
                             <div class="simple-form-group">
-                                <label>CEP *</label>
-                                <input type="text" name="zip_code" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="simple-form-group">
-                                <label>Cidade *</label>
-                                <input type="text" name="city" required>
-                            </div>
-
-                            <div class="simple-form-group">
-                                <label>Estado *</label>
-                                <select name="state" required>
+                                <label>Tipo de Contrato *</label>
+                                <select name="contract_type" id="contract_type"  required>
                                     <option value="">Selecione</option>
-                                    <option value="AC">Acre</option>
-                                    <option value="AL">Alagoas</option>
-                                    <option value="AP">Amapá</option>
-                                    <option value="AM">Amazonas</option>
-                                    <option value="BA">Bahia</option>
-                                    <option value="CE">Ceará</option>
-                                    <option value="DF">Distrito Federal</option>
-                                    <option value="ES">Espírito Santo</option>
-                                    <option value="GO">Goiás</option>
-                                    <option value="MA">Maranhão</option>
-                                    <option value="MT">Mato Grosso</option>
-                                    <option value="MS">Mato Grosso do Sul</option>
-                                    <option value="MG">Minas Gerais</option>
-                                    <option value="PA">Pará</option>
-                                    <option value="PB">Paraíba</option>
-                                    <option value="PR">Paraná</option>
-                                    <option value="PE">Pernambuco</option>
-                                    <option value="PI">Piauí</option>
-                                    <option value="RJ">Rio de Janeiro</option>
-                                    <option value="RN">Rio Grande do Norte</option>
-                                    <option value="RS">Rio Grande do Sul</option>
-                                    <option value="RO">Rondônia</option>
-                                    <option value="RR">Roraima</option>
-                                    <option value="SC">Santa Catarina</option>
-                                    <option value="SP">São Paulo</option>
-                                    <option value="SE">Sergipe</option>
-                                    <option value="TO">Tocantins</option>
+                                    <option value="CLT">CLT</option>
+                                    <option value="PJ">Pessoa Jurídica</option>
+                                    <option value="TEMPORARIO">Temporário</option>
+                                    <option value="HORISTA">Horista</option>
                                 </select>
                             </div>
+
+                            <div class="form-row">
+                                <div class="simple-form-group">
+                                    <label>Data de Contratação *</label>
+                                    <input type="date" name="hire_date" id="hire_date" required>
+                                </div>
+
+                                <div class="simple-form-group">
+                                    <label>Carga Horária Semanal *</label>
+                                    <input type="number" name="workload" id="workload" min="1" max="60" required>
+                                </div>
+                            </div>
+
+                            <div class="simple-form-group">
+                                <label>Salário</label>
+                                <input id="salary" type="number" name="salary" step="100" placeholder="R$ 0,00">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="simple-form-group">
+                                    <label>Foto</label>
+                                    <input type="file" id="photo" name="photo" accept="image/*">
+                                </div>
+
+                                <div class="simple-form-group">
+                                    <label>Currículo</label>
+                                    <input type="file" name="curriculum" id="curriculum" accept=".pdf,.doc,.docx">
+                                </div>
+                            </div>
+
                         </div>
+
+                        <!-- ================= CONTATO ================= -->
+                        <div class="tab-content" id="contact-tab">
+
+                            <div class="simple-form-group">
+                                <label>E-mail *</label>
+                                <input type="email" name="email" id="email" required>
+                            </div>
+
+                            <div class="simple-form-group">
+                                <label>Telefone *</label>
+                                <input type="text" name="phone" id="phone" required>
+                            </div>
+
+                        </div>
+
+                        <!-- ================= ENDEREÇO ================= -->
+                        <div class="tab-content" id="address-tab">
+
+                            <div class="simple-form-group">
+                                <label>Endereço *</label>
+                                <input type="text" name="address" id="address" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="simple-form-group">
+                                    <label>Número *</label>
+                                    <input type="text" name="address_number" id="address_number" required>
+                                </div>
+
+                                <div class="simple-form-group">
+                                    <label>Complemento</label>
+                                    <input type="text" name="complement" id="complement">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="simple-form-group">
+                                    <label>Bairro *</label>
+                                    <input type="text" name="neighborhood" id="neighborhood" required>
+                                </div>
+
+                                <div class="simple-form-group">
+                                    <label>CEP *</label>
+                                    <input type="text" name="zip_code" id="zip_code" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="simple-form-group">
+                                    <label>Cidade *</label>
+                                    <input type="text" name="city" id="city" required>
+                                </div>
+
+                                <div class="simple-form-group">
+                                    <label>Estado *</label>
+                                    <select name="state" id="state" required>
+                                        <option value="">Selecione</option>
+                                        <option value="AC">Acre</option>
+                                        <option value="AL">Alagoas</option>
+                                        <option value="AP">Amapá</option>
+                                        <option value="AM">Amazonas</option>
+                                        <option value="BA">Bahia</option>
+                                        <option value="CE">Ceará</option>
+                                        <option value="DF">Distrito Federal</option>
+                                        <option value="ES">Espírito Santo</option>
+                                        <option value="GO">Goiás</option>
+                                        <option value="MA">Maranhão</option>
+                                        <option value="MT">Mato Grosso</option>
+                                        <option value="MS">Mato Grosso do Sul</option>
+                                        <option value="MG">Minas Gerais</option>
+                                        <option value="PA">Pará</option>
+                                        <option value="PB">Paraíba</option>
+                                        <option value="PR">Paraná</option>
+                                        <option value="PE">Pernambuco</option>
+                                        <option value="PI">Piauí</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                        <option value="RN">Rio Grande do Norte</option>
+                                        <option value="RS">Rio Grande do Sul</option>
+                                        <option value="RO">Rondônia</option>
+                                        <option value="RR">Roraima</option>
+                                        <option value="SC">Santa Catarina</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="SE">Sergipe</option>
+                                        <option value="TO">Tocantins</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- ================= NAVEGAÇÃO ================= 
+                        <div class="tab-navigation">
+                            <button type="button" class="btn-cancel" onclick="prevTab()">Anterior</button>
+                            <span class="tab-indicator">
+                                Página <span id="current-tab">1</span> de 5
+                            </span>
+                            <button type="button" class="btn-next" onclick="nextTab()">Próximo</button>
+                        </div>-->   
 
                     </div>
 
-                    <!-- ================= NAVEGAÇÃO ================= 
-                    <div class="tab-navigation">
-                        <button type="button" class="btn-cancel" onclick="prevTab()">Anterior</button>
-                        <span class="tab-indicator">
-                            Página <span id="current-tab">1</span> de 5
-                        </span>
-                        <button type="button" class="btn-next" onclick="nextTab()">Próximo</button>
-                    </div>-->   
-
-                </div>
-
-                <!-- FOOTER -->
-                <div class="simple-modal-footer">
-                    <button type="button" class="btn-cancel" data-close-modal>Cancelar</button>
-                    <button type="submit" class="btn-save">Salvar</button>
-                </div>
-            </form>
+                    <!-- FOOTER -->
+                    <div class="simple-modal-footer">
+                        <button type="button" class="btn-cancel" data-close-modal>Cancelar</button>
+                        <button type="submit" class="btn-save">Salvar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>

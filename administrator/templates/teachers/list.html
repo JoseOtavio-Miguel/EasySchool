@@ -82,17 +82,24 @@
                     </td>
 
                     <td class="actions">
-                        <div>
-                            <a class="btn-icon edit" href="{% url 'administrator:teacher_edit_account' teacher.id %}">
+                        <div style="margin-bottom:0.4rem;">
+                            <button class="btn btn-primary" 
+                            class="btn-edit"
+                            data-open-modal="teacher"
+                            data-entity="teacher"
+                            data-mode="edit"
+                            data-id="{{ teacher.id }}">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
                         </div>
 
                         <form method="post"
-                              action="{% url 'administrator:deactivate_teacher' teacher.id %}"
                               style="display:inline;">
                             {% csrf_token %}
                             <button type="submit"
-                                    class="btn-icon delete"
-                                    title="Desativar professor">
+                                    class="btn btn-primary"
+                                    title="Desativar professor"
+                                    style="background-color:red;">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </form>

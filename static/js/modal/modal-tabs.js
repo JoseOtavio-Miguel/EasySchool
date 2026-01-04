@@ -28,7 +28,7 @@ document.querySelectorAll('.simple-modal-overlay').forEach(modal => {
 });
 
 /* ===========================
-   MODAL TABS (ESCOPADO)
+   MODAL TABS 
 =========================== */
 
 function initModalTabs(modal) {

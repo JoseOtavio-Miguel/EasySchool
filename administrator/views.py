@@ -15,11 +15,13 @@ from student.models import Student
 from teacher.models import Teacher
  
 
-
+# Views 
+# Index View - Redirect to Homepage 
 def index(request):
     return render(request, 'homepage.html')
 
 
+# Dashboard -> Main page for user, include sidebar, footer and the flexible and apropriate content depending on the current page
 @login_required
 def dashboard(request):
     if request.user.role != 'admin':
@@ -29,7 +31,167 @@ def dashboard(request):
 from django.db.models import Q
 
 
-# List Students #
+
+# TEACHER´S VIEWS 
+# List Teachers -> List all teachers in the form content
+def list_teachers(request):
+    teachers = Teacher.objects.all()
+
+    context = {
+        'teachers': teachers,
+        'page': 'list_teachers',
+        'open_teacher_modal': request.session.pop('open_teacher_modal', False),
+    }
+
+    return render(request, 'dashboard_admin/dashboard.html', context)
+
+
+# Create and Update Teacher´s Data 
+@transaction.atomic
+def load_teacher(request):
+    if request.method == "POST":
+        teacher_id = request.POST.get('teacher_id')
+
+        try:
+            if teacher_id and teacher_id.strip():
+                teacher = get_object_or_404(Teacher, id=teacher_id)
+                mode = "editado"
+            else:
+                teacher = Teacher()
+                mode = "criado"
+
+            # Personal Data
+            teacher.first_name = request.POST.get("first_name")
+            teacher.last_name = request.POST.get("last_name")
+            teacher.cpf = request.POST.get("cpf")
+            teacher.rg = request.POST.get("rg", "")
+            
+            # Handle date fields properly (pode ser vazio)
+            date_of_birth = request.POST.get("date_of_birth")
+            teacher.date_of_birth = date_of_birth if date_of_birth else None
+            
+            teacher.gender = request.POST.get("gender")
+            
+            # Professional Data
+            teacher.education_level = request.POST.get("education_level")
+            teacher.degree = request.POST.get("degree")
+            teacher.subjects = request.POST.get("subjects")
+            teacher.is_coordinator = request.POST.get("is_coordinator") == "1"
+            teacher.coordinator_area = request.POST.get("coordinator_area", "")
+            
+            # Contract Data
+            teacher.contract_type = request.POST.get("contract_type")
+            
+            hire_date = request.POST.get("hire_date")
+            teacher.hire_date = hire_date if hire_date else None
+            
+            workload = request.POST.get("workload")
+            teacher.workload = int(workload) if workload else None
+            
+            salary = request.POST.get("salary")
+            teacher.salary = float(salary) if salary else None
+            
+            # Files
+            if request.FILES.get("photo"):
+                teacher.photo = request.FILES.get("photo")
+            if request.FILES.get("curriculum"):
+                teacher.curriculum = request.FILES.get("curriculum")
+            
+            # Contact Data
+            teacher.email = request.POST.get("email")
+            teacher.phone = request.POST.get("phone")
+            
+            # Address Data
+            teacher.address = request.POST.get("address")
+            teacher.address_number = request.POST.get("address_number")
+            teacher.complement = request.POST.get("complement", "")
+            teacher.neighborhood = request.POST.get("neighborhood")
+            teacher.zip_code = request.POST.get("zip_code")
+            teacher.city = request.POST.get("city")
+            teacher.state = request.POST.get("state")
+
+            # Save teacher
+            teacher.save()
+            
+            # Update registration number after saving (para ter o ID)
+            if mode == "criado":
+                teacher.registration_number = str(teacher.id).zfill(5)
+                teacher.save()
+
+            messages.success(request, f'Professor {mode} com sucesso!')
+            return redirect('administrator:list_teachers')
+
+        except Exception as e:
+            import traceback
+            print(f"Erro completo: {traceback.format_exc()}")  # Para debug
+            messages.error(request, f'Erro ao salvar: {str(e)}')
+            return redirect('administrator:list_teachers')
+
+    return redirect('administrator:list_teachers')
+
+
+def teachers_detail(request, teacher_id):
+    teacher = get_object_or_404(Teacher, id=teacher_id)
+    
+    return JsonResponse({
+        "id": teacher.id,
+
+        # Personal Data
+        "first_name": teacher.first_name or '',
+        "last_name": teacher.last_name or '',
+        "cpf": teacher.cpf or '',
+        "rg": teacher.rg or '',
+        "date_of_birth": teacher.date_of_birth.isoformat() if teacher.date_of_birth else '',
+        "gender": teacher.gender or '',
+
+        # Professional Data
+        "registration_number": teacher.registration_number or '',
+        "education_level": teacher.education_level or '',
+        "degree": teacher.degree or '',
+        "subjects": teacher.subjects or '',
+        "is_coordinator": teacher.is_coordinator if teacher.is_coordinator is not None else False,
+        "coordinator_area": teacher.coordinator_area or '',
+
+        # Contract Data
+        "contract_type": teacher.contract_type or '',
+        "hire_date": teacher.hire_date.isoformat() if teacher.hire_date else '',
+        "workload": teacher.workload or '',
+        "salary": str(teacher.salary) if teacher.salary is not None else '',
+
+        # Files / Media
+        "photo": teacher.photo.url if teacher.photo else '',
+        "curriculum": teacher.curriculum.url if teacher.curriculum else '',
+
+        # Contact Data
+        "email": teacher.email or '',
+        "phone": teacher.phone or '',
+
+        # Address Data
+        "address": teacher.address or '',
+        "address_number": teacher.address_number or '',
+        "complement": teacher.complement or '',
+        "neighborhood": teacher.neighborhood or '',
+        "zip_code": teacher.zip_code or '',
+        "city": teacher.city or '',
+        "state": teacher.state or '',
+    })
+
+
+'''
+# Deactive Teacher -> Changes the active status to false but still keeps the user's data in the database
+def deactivate_teacher(request, student_id):
+    if request.method == 'POST':
+        teacher = get_object_or_404(Student, id=student_id)
+        teacher.is_active = False
+        teacher.save()
+        messages.success(request, f'Professor {teacher.name} desativado com sucesso!')
+    
+    return redirect('administrator:list_teacher')  
+'''
+
+
+# STUDENT´S VIEWS 
+# List Students -> List all students in the form content
 def list_students(request):
     students = Student.objects.all()
 
@@ -57,204 +219,23 @@ def list_students(request):
 
 
 
-def list_teachers(request):
-    teachers = Teacher.objects.all()
-
-    context = {
-        'teachers': teachers,
-        'page': 'list_teachers',
-        'open_teacher_modal': request.session.pop('open_teacher_modal', False),
-    }
-
-    return render(request, 'dashboard_admin/dashboard.html', context)
-
-
-
-def deactivate_student(request, student_id):
-    if request.method == 'POST':
-        student = get_object_or_404(Student, id=student_id)
-        student.is_active = False
-        student.save()
-        messages.success(request, f'Aluno {student.name} desativado com sucesso!')
-    
-    return redirect('administrator:list_students')  
-
-
-
-def deactivate_teacher(request, student_id):
-    if request.method == 'POST':
-        teacher = get_object_or_404(Student, id=student_id)
-        teacher.is_active = False
-        teacher.save()
-        messages.success(request, f'Professor {teacher.name} desativado com sucesso!')
-    
-    return redirect('administrator:list_teacher')  
-
-
-
-
-# Register Teacher account on DataBase 
-@transaction.atomic
-def teacher_create_account(request):
-    teachers = Teacher.objects.all()
-    teacher = None
-    teacher_id = teachers.count() + 1
-    trasaction = ''
- 
-
-    if request.method == "POST":
-        try:
-            transaction = 'create'
-
-            teacher = Teacher.objects.create(
-                # Personal Data [User]
-                first_name=request.POST.get("first_name"),
-                last_name=request.POST.get("last_name"),
-                cpf=request.POST.get("cpf"),
-                rg=request.POST.get("rg"),
-                date_of_birth=request.POST.get("date_of_birth"),
-                gender=request.POST.get("gender"),
-
-                # Professional Data
-                registration_number = str(teachers.count() + 1).zfill(5),
-                education_level=request.POST.get("education_level"),
-                degree=request.POST.get("degree"),
-                subjects=request.POST.get("subjects"),
-                is_coordinator = request.POST.get("is_coordinator") == "1",
-                coordinator_area=request.POST.get("coordinator-area-field"),
-
-                # Contract Data
-                contract_type=request.POST.get("contract_type"),
-                hire_date=request.POST.get("hire_date"),
-                workload=request.POST.get("workload"),
-                salary=request.POST.get("salary"),
-                photo=request.POST.get("photo"),
-                curriculum=request.POST.get("curriculum"),
-
-                # Contact Data
-                email=request.POST.get("email"),
-                phone=request.POST.get("phone"),
-
-                # Adress Data
-                address=request.POST.get("address"),
-                address_number=request.POST.get("address_number"),
-                complement=request.POST.get("complement"),
-                neighborhood=request.POST.get("neighborhood"),
-                zip_code=request.POST.get("zip_code"),
-                city=request.POST.get("city"),
-                state=request.POST.get("state"),
-            )
-
-            cpf_clean = student.cpf.replace(".", "").replace("-", "")
-            email = student.email
-
-            User.objects.create_user(
-                username=email,
-                email=email,
-                password=cpf_clean,
-                role="student",
-                student=student
-            )
-
-            if (transaction == 'create'):
-                messages.success(request, "Professor e login criados com sucesso!")
-                return redirect("administrator:list_teachers")
-
-        except Exception as e:
-            print("ERRO AO CRIAR Professor:", e)
-            messages.error(request, f"Erro ao cadastrar professor: {e}")
-
-        context = {
-        "is_edit_teacher": False,
-        "form_action": reverse("teacher:teacher_create_account"),
-        "teacher": None,
-        'page': 'list_teachers',
-        'open_teacher_model': False,
-        }
-    return render(request, "teachers/list.html", context)
-
-
-
-@transaction.atomic
-def teacher_edit_account(request, teacher_id):
-    teacher = get_object_or_404(Teacher, id=teacher_id)
-
-    if request.method == "POST":
-        try:
-            # Personal Data [User]
-            teacher.first_name=request.POST.get("first_name"),
-            teacher.last_name=request.POST.get("last_name"),
-            teacher.cpf=request.POST.get("cpf"),
-            teacher.rg=request.POST.get("rg"),
-            teacher.date_of_birth=request.POST.get("date_of_birth"),
-            teacher.gender=request.POST.get("gender"),
-            # Professional Data
-            teacher.registrarion_number= str(teacher.id).zfill(5),
-            teacher.education_level=request.POST.get("education_level"),
-            teacher.degree=request.POST.get("degree"),
-            teacher.subjects=request.POST.get("subjects"),
-            teacher.is_coordinator=request.POST.get("is_coordinator"),
-            teacher.coordinator_area=request.POST.get("coordinator-area-field"),
-            # Contract Data
-            teacher.contract_type=request.POST.get("contract_type"),
-            teacher.hire_date=request.POST.get("hire_date"),
-            teacher.workload=request.POST.get("workload"),
-            teacher.salary=request.POST.get("salary"),
-            teacher.photo=request.POST.get("photo"),
-            teacher.curriculum=request.POST.get("curriculum"),
-            # Contact Data
-            teacher.email=request.POST.get("email"),
-            teacher.phone=request.POST.get("phone"),
-            # Adress Data
-            teacher.address=request.POST.get("address"),
-            teacher.address_number=request.POST.get("address_number"),
-            teacher.complement=request.POST.get("complement"),
-            teacher.neighborhood=request.POST.get("neighborhood"),
-            teacher.zip_code=request.POST.get("zip_code"),
-            teacher.city=request.POST.get("city"),
-            teacher.state=request.POST.get("state"),
-
-            teacher.save()
-
-            messages.success(request, "Dados do professor atualizados com sucesso!")
-            return redirect("administrator:list_teachers")
-
-        except Exception as e:
-            print("ERRO AO EDITAR Professor:", e)
-            messages.error(request, f"Erro ao atualizar professor: {e}")
-
-    context = {
-        'teacher': teacher,
-        'page': 'list_teachers',
-        'open_teacher_modal': False,
-
-        "is_edit_teacher": True,
-        "form_action": reverse("teacher:teacher_create_account"),
-    }
-
-    return render(request, "dashboard_admin/dashboard.html", context)
-
-
-
-
-
-# STUDENT´S VIEWS #
 @transaction.atomic
 def load_student(request):
     if request.method == 'POST':
         student_id = request.POST.get('student_id')
         
         try:
-            # EDIT MODE
+            # Edit Student
             if student_id and student_id.strip():
                 student = get_object_or_404(Student, id=student_id)
                 mode = "editado"
-            # CREATE MODE
+
+            # Create Student
             else:
                 student = Student()
                 mode = "criado"
             
-            # Preencher dados
+            # Fill data
             student.first_name = request.POST.get('first_name')
             student.last_name = request.POST.get('last_name')
             student.cpf = request.POST.get('cpf')
@@ -289,14 +270,13 @@ def load_student(request):
             student.save()
             
             messages.success(request, f'Estudante {mode} com sucesso!')
-            return redirect('student:dashboard')
+            return redirect('administrator:list_students')
             
         except Exception as e:
             messages.error(request, f'Erro ao salvar: {str(e)}')
-            return redirect('student:dashboard')
+            return redirect('administrator:list_students')
     
-    return redirect('student:dashboard')
-
+    return redirect('administrator:list_students')
 
 
 
@@ -329,4 +309,17 @@ def student_detail(request, student_id):
         "city": student.city or '',
         "state": student.state or ''
     })
+
+
+'''
+# Deactive Student -> Changes the active status to false but still keeps the user's data in the database
+def deactivate_student(request, student_id):
+    if request.method == 'POST':
+        student = get_object_or_404(Student, id=student_id)
+        student.is_active = False
+        student.save()
+        messages.success(request, f'Aluno {student.name} desativado com sucesso!')
+    
+    return redirect('administrator:list_students')  
+'''
 

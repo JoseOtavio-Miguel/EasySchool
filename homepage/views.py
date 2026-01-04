@@ -13,3 +13,10 @@ def login_page(request):
     return render(request, 'login/login_content.html')
 
 
+# Forgot Password Section
+def forgot_password(request):
+    context = {
+        'open_forgotPass_modal': True
+    }
+
+    return render(request, 'login/login_content.html', context)

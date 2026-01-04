@@ -12,5 +12,9 @@
         </div>
     {% endif %}
     <!-- Include Sections to he Login Page -->
-     {% include 'login/user.html' %}
+    {% include 'login/user.html' %}
+
+    {% if open_modal_forgot == True %}
+        {% include 'login/modal_forgot_password/forgot_password.html' %}
+    {% endif %}
 {% endblock %}

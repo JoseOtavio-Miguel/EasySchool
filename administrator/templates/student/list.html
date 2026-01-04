@@ -41,10 +41,9 @@
                     Filtrar
                 </button>
             </form>
-            <a href="#" class="btn btn-secondary" id="resetFilters">
+            <a href="{% url 'administrator:list_students' %}" class="btn btn-secondary">
                 Limpar filtros
             </a>
-            
         </div>
     </div>
 
@@ -92,13 +91,13 @@
                             <button class="btn btn-primary"
                             data-open-modal="student"
                             data-mode="edit"
-                            data-student-id="{{ student.id }}">
+                            data-entity="student"
+                            data-id="{{ student.id }}">
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </button>
                         </div>
 
                         <form method="post"
-                              action="{% url 'administrator:deactivate_student' student.id %}"
                               style="display:inline;">
                             {% csrf_token %}
                             <button type="submit"
