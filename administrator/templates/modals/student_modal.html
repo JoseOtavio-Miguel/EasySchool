@@ -1,7 +1,7 @@
-<!-- MODAL CREATE STUDENT -->
+<!-- MODAL STUDENT -->
 <div class="simple-modal-overlay {% if open_student_modal %}active{% endif %}" id="modal-student" data-modal="student">
     <div class="simple-modal">
-        <!-- Header -->
+        <!-- ================= Header ================= -->
         <div class="simple-modal-header form-scroll">
             <h3>Novo Estudante</h3>
             <button class="simple-close" data-close-modal>&times;</button>
@@ -11,9 +11,8 @@
                 action="{% url 'administrator:load_student'%}">
                 {% csrf_token %}
                 <input type="hidden" name="student_id" id="student_id">
-
                 <div class="simple-modal-body ">
-                    <!-- Buttons -->
+                    <!-- ================= Buttons ================= -->
                     <div class="form-tabs">
                         <button type="button" class="tab-btn active" data-tab="personal">Dados Pessoais</button>
                         <button type="button" class="tab-btn" data-tab="academic">Dados Acadêmicos</button>
@@ -21,7 +20,7 @@
                         <button type="button" class="tab-btn" data-tab="address">Endereço</button>
                     </div>
 
-                    <!-- Personal Data -->
+                    <!-- ================= Personal Data ================= -->
                     <div class="tab-content active" id="personal-tab">
                         <div class="simple-form-group">
                             <label>Nome *</label>
@@ -64,7 +63,7 @@
                         </div>
                     </div>
 
-                    <!-- Academic Information -->
+                    <!-- ================= Academic Information ================= -->
                     <div class="tab-content" id="academic-tab">
                         <div class="simple-form-group">
                             <label>Número de Matrícula *</label>
@@ -119,7 +118,7 @@
                         </div>
                     </div>
 
-                    <!-- Contact Info -->
+                    <!-- ================= Contact Information ================= -->
                     <div class="tab-content" id="contact-tab">
                         <div class="form-row">
                             <div class="simple-form-group">
@@ -154,8 +153,17 @@
                         </div>
                     </div>
 
-                    <!-- Address -->
+                    <!-- ================= Address ================= -->
                     <div class="tab-content" id="address-tab">
+                        <div class="form-row">
+                            <div class="simple-form-group">
+                                <label>CEP *</label>
+                                <input type="text" id="zip_code" name="zip_code" placeholder="00000-000" value="{{student.zip_code}}" required>
+                                <small id="cep-loading" style="display:none; color: #666;">Buscando CEP...</small>
+                                <small id="cep-error" style="display:none; color: #e74c3c;">CEP não encontrado</small>
+                            </div>
+                        </div>
+
                         <div class="simple-form-group">
                             <label>Endereço *</label>
                             <input type="text" id="address" name="address" value="{{student.address}}" required>
@@ -178,11 +186,6 @@
                                 <label>Bairro *</label>
                                 <input type="text" id="neighborhood" name="neighborhood" value="{{student.neighborhood}}" required>
                             </div>
-
-                            <div class="simple-form-group">
-                                <label>CEP *</label>
-                                <input type="text" id="zip_code" name="zip_code" placeholder="00000-000" value="{{student.zip_code}}" required>
-                            </div>
                         </div>
 
                         <div class="form-row">
@@ -198,7 +201,8 @@
                         </div>
                     </div>
 
-                    <!-- Navegation Controls -->
+
+                    <!-- ================= Navegation Controll ================= -->
                     <div class="tab-navigation">
                         <button type="button" class="btn-cancel" data-prev-tab>Anterior</button>
                         <span class="tab-indicator">
@@ -208,6 +212,7 @@
                     </div>
                 </div>
 
+                <!-- ================= Footer ================= -->
                 <div class="simple-modal-footer">
                     <div>
                         <a type="button" class="btn-cancel" href="#"> Cancelar</a>

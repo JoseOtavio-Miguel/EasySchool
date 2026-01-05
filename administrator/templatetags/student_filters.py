@@ -16,12 +16,10 @@ def get_grade_level_display(value):
     }
     return grade_levels.get(value, value)
 
+
+
 @register.filter(name='get_grade_display')
 def get_grade_display(value):
-    """
-    Retorna o display name para o ano/série.
-    Adapte conforme seus modelos.
-    """
     grades = {
         '1ANO': '1º Ano',
         '2ANO': '2º Ano',
@@ -38,11 +36,10 @@ def get_grade_display(value):
     }
     return grades.get(value, value)
 
+
+
 @register.filter(name='get_shift_display')
 def get_shift_display(value):
-    """
-    Retorna o display name para o turno.
-    """
     shifts = {
         'MORNING': 'Manhã',
         'AFTERNOON': 'Tarde',

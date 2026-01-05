@@ -28,7 +28,6 @@ def dashboard(request):
         return redirect('login')
     return render(request, 'dashboard_admin/dashboard.html')
 
-from django.db.models import Q
 
 
 
@@ -36,6 +35,20 @@ from django.db.models import Q
 # List Teachers -> List all teachers in the form content
 def list_teachers(request):
     teachers = Teacher.objects.all()
+
+    q = request.GET.get('q')
+    education_level_filter = request.GET.get('education_level')
+
+    if q:
+        teachers = teachers.filter(
+        Q(first_name__icontains=q) |
+        Q(last_name__icontains=q) |
+        Q(registration_number__icontains=q) |
+        Q(contract_type__icontains=q) 
+        )
+    
+    if education_level_filter:
+        teachers = teachers.filter(education_level = education_level_filter)
 
     context = {
         'teachers': teachers,

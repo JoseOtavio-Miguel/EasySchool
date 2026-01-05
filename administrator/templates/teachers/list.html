@@ -29,8 +29,8 @@
 
                 <select name="education_level">
                     <option value="">Todas as formações</option>
-                    <option value="GRADUAÇÃO">Graduação</option>
-                    <option value="ESPECIALIZAÇÃO">Especialização</option>
+                    <option value="GRADUACAO">Graduação</option>
+                    <option value="ESPECIALIZACAO">Especialização</option>
                     <option value="MESTRADO">Mestrado</option>
                     <option value="DOUTORADO">Doutorado</option>
                 </select>
@@ -39,6 +39,9 @@
                     Filtrar
                 </button>
             </form>
+            <a href="{% url 'administrator:list_teachers' %}" class="btn btn-secondary">
+                Limpar filtros
+            </a>    
         </div>
     </div>
 
